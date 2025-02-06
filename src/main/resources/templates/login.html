@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+	 lang="ja">
+
+<head>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<meta charset="UTF-8">
+	<title th:text="#{login}"></title>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md background">
+		<span class="navbar-brand" th:text="#{overtime.work}"></span>
+	</nav>
+
+	<div class="container">
+		<div class="row my-2">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-3">
+				<h1 th:text="#{login}"></h1>
+			</div>
+			<div class="col-sm-6"></div>
+		</div>
+		<!-- エラーメッセージ -->
+		<div class="row my-2" th:if="${session[SPRING_SECURITY_LAST_EXCEPTION]} != null">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6 alert alert-danger alert-dismissble fade show" role="alert">
+				<span th:text="#{login.error}"></span>
+				<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+		<!-- ユーザー名、パスワード入力欄 -->
+		<div class="row my-2 justify-content-center">
+			<div class="col-sm-6">
+				<form th:action="@{/login}" method="post">
+					<div class="mb-3">
+						<label class="form-label" for="user" th:text="#{user}"></label>
+						<input type="text" class="form-control" name="user" id="user">
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="pass" th:text="#{pass}"></label>
+						<input type="password" class="form-control" name="pass" id="pass">
+					</div>
+					<button type="submit" class="btn btn-primary" th:text="#{login}"></button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
+
+</body>
+
+</html>
