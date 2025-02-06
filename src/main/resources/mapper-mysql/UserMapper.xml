@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.intern_quest_202504.repository.UserMapper">
+	<resultMap type="spring.intern_quest_202504.domain.user.model.User"
+		id="user">
+		<id column="id" property="id" />
+		<result column="user" property="user" />
+		<result column="pass" property="pass" />
+		<result column="name" property="name" />
+		<result column="department_id" property="department_id" />
+		<result column="role" property="role" />
+		<result column="authority" property="authority" />
+	</resultMap>
+	
+	<select id="findLoginUser" parameterType="String"
+		resultType="spring.intern_quest_202504.domain.user.model.User">
+		select
+			*
+		from
+			user
+			where user = #{user}
+	</select>
+	
+	
+</mapper>
