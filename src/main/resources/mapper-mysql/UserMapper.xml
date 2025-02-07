@@ -15,7 +15,7 @@
 	</resultMap>
 	
 	<select id="findLoginUser" parameterType="String"
-		resultType="spring.intern_quest_202504.domain.user.model.User">
+		resultMap="user">
 		select
 			*
 		from
