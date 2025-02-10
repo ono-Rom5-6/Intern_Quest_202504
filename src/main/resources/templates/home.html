@@ -8,7 +8,10 @@
 </head>
 <body>
 <p>ログイン成功</p>
-<a th:href="@{overtime/apply}"></a>
+<a th:href="@{overtime/apply}" th:text="#{apply}"></a>
+
+
+<a th:href="@{logout}" th:text="#{logout}"></a>
 
 </body>
 </html>

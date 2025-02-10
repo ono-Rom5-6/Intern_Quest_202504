@@ -1,12 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	lang="ja">
-<head>
-<meta charset="UTF-8">
-<title th:text="#{apply}"></title>
-</head>
-<body>
-	<h1 th:text="#{apply}"></h1>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<title th:text="#{apply}"></title>
+</head>
+
+
+
+<body>
+	<div class="container mt-5">
+		<h2 class="mb-4 text-center" th:text="|#{overtime}#{apply}|"></h2>
+		<form th:action="@{/overtime/apply}" th:object="${overtimeForm}" method="post">
+			
+
+			<div class="mb-3">
+				<label for="workPattern" class="form-label">勤務パターン</label>
+				<input type="text" class="form-control" id="workPattern" th:field="*{workPattern}"
+					placeholder="勤務パターンを入力"/>
+				<div class="text-danger" th:if="${#fields.hasErrors('workPattern')}" th:errors="*{workPattern}">
+				</div>
+			</div>
+			
+			残業予定時間
+			<div class="mb-3">
+				<label for="scheduleStart" class="form-label">開始</label>
+				<input type="text" class="form-control" id="scheduleStart" th:field="*{scheduleStart}"
+					placeholder="勤務パターンを入力"/>
+				<div class="text-danger" th:if="${#fields.hasErrors('scheduleStart')}" th:errors="*{scheduleStart}">
+				</div>
+			</div>
+				<label for="scheduleFinish" class="form-label">終了</label>
+				<input type="text" class="form-control" id="scheduleFinish" th:field="*{scheduleFinish}"
+					placeholder="勤務パターンを入力">
+				<div class="text-danger" th:if="${#fields.hasErrors('scheduleFinish')}" th:errors="*{scheduleFinish}"/>
+				</div>
+			</div>
+			<!--
+			<div class="mb-3">
+				<label for="reason" class="form-label" th:text="#{reason}"></label>
+				<textarea class="form-control" id="reason"  th:field="*{reason}" th:errorclass="is-invalid"></textarea>
+				<div class="invalid-feedback" th:errors="*{reason}"></div>
+			</div>
+			-->
+
+			
+
+			
+
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary btn-lg">登録</button>
+			</div>
+		</form>
+	</div>
+
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
 </body>
+
 </html>
