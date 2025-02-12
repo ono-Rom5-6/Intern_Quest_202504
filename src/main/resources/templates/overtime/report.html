@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}" lang="ja">
+
+<head>
+	<title th:text="#{report}"></title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="row g-3">
+			<div class="container-md col-12 mt-2">
+				<h2 class="mt-2" th:text="|#{report}|"></h2>
+			</div>
+		</div>
+		<form th:action="@{/overtime/report}" th:object="${reportForm}" method="post">
+			<div th:text="|#{actual.overtime}|"></div>
+			<div class="mb-3">
+				<label for="actualStart" class="form-label" th:text="#{start}">開始</label>
+				<input type="datetime-local" class="form-control" th:field="*{actualStart}"
+					th:errorclass="is-invalid" />
+				<div class="invalid-feedback" th:errors="*{actualStart}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="actualFinish" class="form-label" th:text="#{finish}">終了</label>
+				<input type="datetime-local" class="form-control" th:field="*{actualFinish}"
+					th:errorclass="is-invalid" />
+				<div class="invalid-feedback" th:errors="*{actualFinish}"></div>
+			</div>
+
+			<div th:text="|#{restTime}|"></div>
+			<div class="row g-3">
+				<div class="input-group mb-3 col">
+					<label for="restHour" class="form-label"></label>
+					<input type="text" class="form-control" aria-label="restHour" aria-describedby="restHour">
+					<span class="input-group-text" id="restHour" th:text="|#{restHour}|"></span>
+				</div>
+				<div class="input-group mb-3 col">
+					<label for="restMin" class="form-label"></label>
+					<input type="text" class="form-control" aria-label="restMin" aria-describedby="restMin">
+					<span class="input-group-text" id="restMin" th:text="|#{restMin}|"></span>
+				</div>
+				<div class="col"></div>
+			</div>
+			<!--
+
+			<div class="mb-3">
+				<label for="restHour" class="form-label" th:text="|#{restHour}|"></label>
+				<textarea class="form-control" th:field="*{restHour}" th:errorclass="is-invalid"></textarea>
+				<div class="invalid-feedback" th:errors="*{restHour}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="restMin" class="form-label" th:text="|#{restMin}|"></label>
+				<textarea class="form-control" th:field="*{restMin}" th:errorclass="is-invalid"></textarea>
+				<div class="invalid-feedback" th:errors="*{restMin}"></div>
+			</div>
+-->
+
+			<div class="mb-3">
+				<label for="content" class="form-label" th:text="|#{overtime}#{report}|"></label>
+				<textarea class="form-control" th:field="*{content}" th:errorclass="is-invalid"></textarea>
+				<div class="invalid-feedback" th:errors="*{content}"></div>
+			</div>
+
+			<div class="mb-3">
+				<input type="submit" th:value="#{report}" class="btn btn-primary">
+				<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
+			</div>
+		</form>
+
+
+	</div>
+</body>
+
+</html>

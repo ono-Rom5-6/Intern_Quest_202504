@@ -8,7 +8,7 @@ public class User {
 	private String user;
 	private String pass;
 	private String name;
-	private String department_id;
+	private String departmentId;
 	private String role;
 	private String authority;
 }

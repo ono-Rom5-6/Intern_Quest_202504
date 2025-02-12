@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}" lang="ja">
+
+<head>
+	<title th:text="#{print}"></title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="row g-3">
+			<div class="container-md col-12 mt-2">
+				<h2 class="mt-2" th:text="|#{print}|"></h2>
+			</div>
+		</div>
+		<form th:action="@{/overtime/print}" method="post">
+			<div class="p-2 m-2 border border-secondary rounded">
+
+				<table class="table table-bordered table-striped">
+					<tbody>
+						<tr>
+							<th scope="row" class="table-primary">部署名</th>
+							<td>営業部</td>
+							<th scope="row" class="table-primary">氏名</th>
+							<td>大阪太郎</td>
+							<th scope="row" class="table-primary">勤務パターン</th>
+							<td>早出A</td>
+						</tr>
+						<tr>
+							<th scope="row" class="table-primary">残業予定時間</th>
+							<td colspan="5">2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
+						</tr>
+						<tr>
+							<th scope="row" class="table-primary">残業理由</th>
+							<td colspan="5">変更事項があり、取引先担当者と打ち合わせが必要になりました。</td>
+						</tr>
+
+						<tr>
+							<th scope="row" class="table-primary">承認日</th>
+							<td>2024年12月12日</td>
+							<th scope="row" class="table-primary">承認者</th>
+							<td colspan="3">香川一郎</td>
+						</tr>
+						<tr>
+							<table class="table table-bordered table-striped">
+								<tbody>
+									<tr>
+										<th scope="row" class="table-info">実残業時間</th>
+										<td colspan="5">2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
+									</tr>
+									<tr>
+										<th scope="row" class="table-info">休憩時間</th>
+										<td colspan="5">01時00分</td>
+									</tr>
+									<tr>
+										<th scope="row" class="table-info">残業報告</th>
+										<td colspan="5">変更事項があり、取引先担当者と打ち合わせを行いました。</td>
+									</tr>
+									<tr>
+										<th scope="row" class="table-info">申請日</th>
+										<td>2024年12月12日</td>
+										<th scope="row" class="table-info">申請者</th>
+										<td colspan="3">大阪太郎</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="mb-3">
+				<input type="submit" th:value="#{print}" class="btn btn-primary">
+				<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
+			</div>
+		</form>
+
+
+</body>
+
+</html>

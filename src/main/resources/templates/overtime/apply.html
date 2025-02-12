@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}" lang="ja">
+
+<head>
+	<title th:text="#{apply}"></title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="row g-3">
+			<div class="container-md col-12 mt-2">
+				<h2 class="mt-2" th:text="|#{overtime}#{apply}|"></h2>
+			</div>
+		</div>
+
+		<div class="container mt-5">
+			<form th:action="@{/overtime/apply}" th:object="${applyForm}" method="post">
+				<div class="mb-3">
+					<label for="workPattern" class="form-label">勤務パターン</label>
+					<input type="text" class="form-control" th:field="*{workPattern}" th:errorclass="is-invalid" />
+					<div class="invalid-feedback" th:errors="*{workPattern}"></div>
+				</div>
+				
+				<div th:text="|#{overtime}#{schedule}|"></div>
+				<div class="mb-3">
+					<label for="scheduleStart" class="form-label" th:text="#{start}">開始</label>
+					<input type="datetime-local" class="form-control" th:field="*{scheduleStart}" th:errorclass="is-invalid" />
+					<div class="invalid-feedback" th:errors="*{scheduleStart}"></div>
+				</div>
+				<div class="mb-3">
+					<label for="scheduleFinish" class="form-label" th:text="#{finish}">終了</label>
+					<input type="datetime-local" class="form-control" th:field="*{scheduleFinish}" th:errorclass="is-invalid" />
+					<div class="invalid-feedback" th:errors="*{scheduleFinish}"></div>
+				</div>
+				<div class="mb-3">
+					<label for="reason" class="form-label" th:text="|#{overtime}#{reason}|"></label>
+					<textarea class="form-control" th:field="*{reason}" th:errorclass="is-invalid"></textarea>
+					<div class="invalid-feedback" th:errors="*{reason}"></div>
+				</div>
+
+				<div class="mb-3">
+					<input type="submit" th:value="#{apply}" class="btn btn-primary">
+					<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
+				</div>
+			</form>
+
+		</div>
+
+
+
+
+
+
+
+
+
+	</div>
+
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
+</body>
+
+</html>

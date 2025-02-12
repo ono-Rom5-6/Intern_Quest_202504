@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net..nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+</head>
+
+<body>
+	<nav layout:fragment="header" class="navbar navbar-expand-lg background mb-2">
+		<div class="container-fluid">
+			<p class="navbar-brand" th:text="#{overtime.app}"></p>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" th:classappend="${title?.equals('home')} ? 'active' : ''"
+							aria-current="page" href="/home" th:text="#{home}"></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:classappend="${title?.equals('apply')} ? 'active' : ''"
+							href="/overtime/apply" th:text="#{apply}"></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:classappend="${title?.equals('print')} ? 'active' : ''"
+							href="/overtime/select" th:text="#{print}"></a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false" th:text="${#authentication.principal.loginUser.name}">
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<form class="dropdown-item" id="logout-form" th:action="@{/logout}" method="post">
+									<button type="submit" class="dropdown-item" th:text="#{logout}"></button>
+								</form>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+</body>
+
+</html>
