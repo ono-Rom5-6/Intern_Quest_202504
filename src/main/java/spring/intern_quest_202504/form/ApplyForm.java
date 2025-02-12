@@ -1,21 +1,21 @@
 package spring.intern_quest_202504.form;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class OvertimeForm {
+public class ApplyForm {
 	@NotNull
 	private Integer userId;
 
 	@Size(max = 5)
 	private String workPattern;
 
-	private Date scheduleStart;
-	private Date scheduleFinish;
+	private LocalDateTime scheduleStart;
+	private LocalDateTime scheduleFinish;
 
 	@Size(max = 1000)
 	private String reason;

@@ -9,7 +9,7 @@
 		<result column="user" property="user" />
 		<result column="pass" property="pass" />
 		<result column="name" property="name" />
-		<result column="department_id" property="department_id" />
+		<result column="department_id" property="departmentId" />
 		<result column="role" property="role" />
 		<result column="authority" property="authority" />
 	</resultMap>
