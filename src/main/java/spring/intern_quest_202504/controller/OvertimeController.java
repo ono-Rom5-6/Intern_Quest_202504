@@ -1,5 +1,9 @@
 package spring.intern_quest_202504.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,14 +13,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import spring.intern_quest_202504.domain.overtime.model.WorkPattern;
 import spring.intern_quest_202504.form.ApplyForm;
 import spring.intern_quest_202504.form.ReportForm;
 
 @RequestMapping("/overtime")
 @Controller
 public class OvertimeController {
+	@Autowired
+	private MessageSource messageSource;
+
 	@GetMapping("/apply")
 	public String getApply(Model model, @ModelAttribute ApplyForm applyForm, BindingResult bindingResult) {
+		//勤務パターンを登録する
+		ArrayList<WorkPattern> workPatternList = new ArrayList<>();
+		workPatternList.add(new WorkPattern(messageSource.getMessage("earlyPattern", null, null), new String[] {"A", "B", "C", "D", "E", "F"}));
+		workPatternList.add(new WorkPattern(messageSource.getMessage("normalPattern", null, null), new String[] {"A", "B", "C"}));
+		workPatternList.add(new WorkPattern(messageSource.getMessage("latePattern", null, null), new String[] {"A", "B", "C", "D", "E", "F", "G"}));
+		
+		model.addAttribute("workPatternList", workPatternList);
 		//model.addAttribute("overtimeForm", new OvertimeForm());
 		return "overtime/apply";
 	}
@@ -29,56 +44,54 @@ public class OvertimeController {
 
 		//TODO: データを保存する処理をここに記述（例：データベースへ保存）
 		//従業員IDの取得とセット
-		
+
 		//System.out.println("残業登録成功: " + overtimeForm);
 
 		model.addAttribute("successMessage", "残業登録が完了しました！");
 		return "redirect:/home";
 	}
-	
+
 	@GetMapping("/report")
 	public String getReport(Model model, @ModelAttribute ReportForm reportForm, BindingResult bindingResult) {
 		//model.addAttribute("overtimeForm", new OvertimeForm());
 		return "overtime/report";
 	}
-	
+
 	@PostMapping("/report")
 	public String postReport(Model model, @ModelAttribute ReportForm reportForm, BindingResult bindingResult) {
 		//TODO:報告の登録処理
-		
+
 		return "redirect:/home";
-	
+
 	}
-	
-	
+
 	@GetMapping("/select")
 	public String getSelect() {
 		//TODO:検索処理
 		return "overtime/select";
-		
+
 	}
-	
+
 	@PostMapping("/select")
 	public String postSlect() {
 		//TODO:パラメータを受け取って渡す
-		
+
 		return getPrint();
 	}
-	
+
 	@GetMapping("/print")
 	public String getPrint() {
 		//TODO:パラメータを受け取って渡す
-		
+
 		return "overtime/print";
 	}
-	
+
 	@PostMapping("/print")
 	public String postPrint() {
 		//TODO:プリント処理
-		
-		
+
 		return "redirect:/home";
-		
+
 	}
 
 }
