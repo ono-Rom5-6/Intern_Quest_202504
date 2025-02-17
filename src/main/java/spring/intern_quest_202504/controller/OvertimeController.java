@@ -1,9 +1,10 @@
 package spring.intern_quest_202504.controller;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import spring.intern_quest_202504.domain.overtime.model.WorkPattern;
+import spring.intern_quest_202504.application.service.UserApplicationService;
+import spring.intern_quest_202504.domain.overtime.model.Overtime;
+import spring.intern_quest_202504.domain.overtime.service.OvertimeService;
+import spring.intern_quest_202504.domain.user.model.LoginUserDetails;
 import spring.intern_quest_202504.form.ApplyForm;
 import spring.intern_quest_202504.form.ReportForm;
 
@@ -21,32 +25,52 @@ import spring.intern_quest_202504.form.ReportForm;
 @Controller
 public class OvertimeController {
 	@Autowired
+	private UserApplicationService userApplicationService;
+	
+	@Autowired
+	private OvertimeService overtimeService;
+	
+	@Autowired
 	private MessageSource messageSource;
 
 	@GetMapping("/apply")
-	public String getApply(Model model, @ModelAttribute ApplyForm applyForm, BindingResult bindingResult) {
-		//勤務パターンを登録する
-		ArrayList<WorkPattern> workPatternList = new ArrayList<>();
-		workPatternList.add(new WorkPattern(messageSource.getMessage("earlyPattern", null, null), new String[] {"A", "B", "C", "D", "E", "F"}));
-		workPatternList.add(new WorkPattern(messageSource.getMessage("normalPattern", null, null), new String[] {"A", "B", "C"}));
-		workPatternList.add(new WorkPattern(messageSource.getMessage("latePattern", null, null), new String[] {"A", "B", "C", "D", "E", "F", "G"}));
+	public String getApply(Model model, ApplyForm applyForm) {
 		
-		model.addAttribute("workPatternList", workPatternList);
-		//model.addAttribute("overtimeForm", new OvertimeForm());
+		Map<String, Integer> workPatternMap = userApplicationService.getWorkPatternMap(null);
+		model.addAttribute("workPatternMap", workPatternMap);
+		
+		model.addAttribute("applyForm", applyForm);
 		return "overtime/apply";
 	}
 
 	@PostMapping("/apply")
-	public String poserApply(Model model, @ModelAttribute @Validated ApplyForm applyForm, BindingResult bindingResult) {
+	public String poserApply(Model model, @ModelAttribute @Validated ApplyForm applyForm, BindingResult bindingResult, @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
 		if (bindingResult.hasErrors()) {
-			getApply(model, applyForm, bindingResult);
+			
+			return getApply(model, applyForm);
 		}
 
-		//TODO: データを保存する処理をここに記述（例：データベースへ保存）
-		//従業員IDの取得とセット
+		Overtime overtime = new Overtime();
+		
+		//System.out.println(loginUserDetails.getLoginUser().getId());
+		
+		overtime.setUserId(loginUserDetails.getLoginUser().getId()); 
+		
+		//System.out.println(overtime.getUserId());
+		
+		//TODO: 勤務パターンが適切な値かチェックするメソッドを入れること
+		System.out.println(applyForm.getMainPattern() + applyForm.getSubPattern());
+		
+		overtime.setWorkPattern(applyForm.getMainPattern() + applyForm.getSubPattern());
+		
+		overtime.setScheduleStart(applyForm.getScheduleStart());
+		overtime.setScheduleFinish(applyForm.getScheduleFinish());
+		
+		overtime.setReason(applyForm.getReason());
+		
+		overtimeService.addOvertime(overtime);
 
-		//System.out.println("残業登録成功: " + overtimeForm);
-
+		
 		model.addAttribute("successMessage", "残業登録が完了しました！");
 		return "redirect:/home";
 	}

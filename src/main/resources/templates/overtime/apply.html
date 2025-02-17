@@ -3,6 +3,9 @@
 	layout:decorate="~{layout/layout}" lang="ja">
 
 <head>
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/js/overtime/apply.js}" defer></script>
+
 	<title th:text="#{apply}"></title>
 </head>
 
@@ -15,64 +18,75 @@
 		</div>
 
 		<div class="container mt-5">
+			<!-- エラーメッセージ -->
+			<div class="row my-2 justify-content-center" th:object="${applyForm}">
+				<div class="col-sm-6 alert alert-danger alert-dismissble fade show" th:if="${#fields.hasAnyErrors()}">
+					<button class="close" data-dismiss="alert">&times;</button>
+					<th:block th:each="error: ${#fields.allErrors()}">
+						<div class="text-danger" th:text="${error}"></div>
+					</th:block>
+				</div>
+			</div>
+			<!-- エラーメッセージ ここまで -->
+
+
 			<form th:action="@{/overtime/apply}" th:object="${applyForm}" method="post">
-				<!--
 				<div class="mb-3">
 					<label for="workPattern" class="form-label">勤務パターン</label>
-					<input type="text" class="form-control" th:field="*{workPattern}" th:errorclass="is-invalid" />
-					<div class="invalid-feedback" th:errors="*{workPattern}"></div>
+					<div class="row">
+						<div class="col form-group">
+							<div th:each="item : ${workPatternMap}">
+								<input type="radio" th:value="${item.key}" th:field="*{mainPattern}" th:id="${item.key}"
+									th:errorclass="is-invalid" />
+								<label class="form-check-label" th:text="#{__${item.key}__}"></label>
+							</div>
+							<div class="text-danger" th:if="${#fields.hasErrors('mainPattern')}"
+								th:errors="*{mainPattern}"></div>
+						</div>
+						<div class="invalid-feedback" th:errors="*{mainPattern}"></div>
+						<div class="col form-group">
+							<select class="form-select" aria-label="workPatternSub" th:field="*{subPattern}"
+								th:errorclass="is-invalid">
+								<option selected value="">Open this select menu</option>
+								<option value="A" id="A" class="A">A</option>
+								<option value="B" id="B" class="B">B</option>
+								<option value="C" id="C" class="C">C</option>
+								<option value="D" id="D" class="D">D</option>
+								<option value="E" id="E" class="E">E</option>
+								<option value="F" id="F" class="F">F</option>
+								<option value="G" id="G" class="G">G</option>
+							</select>
+							<div class="invalid-feedback" th:errors="*{subPattern}"></div>
+						</div>
+						<div class="col"></div>
+					</div>
 				</div>
-				-->
-
-				<div class="mb-3">
-					<label for="workPattern" class="form-label">勤務パターン</label>
-					<select class="form-select" aria-label="workPattern" th:field="*{workPattern}" th:errorclass="is-invalid">
-						<option selected value="">Open this select menu</option>
-						<option th:each="item : ${workPatternList}" th:text="${item.mainPattern}" th:value="${item.mainPattern}"></option>
-						
-						
-					</select>
-					
-					
-					
-					<div class="invalid-feedback" th:errors="*{workPattern}"></div>
-				</div>
-
 				<div th:text="|#{overtime}#{schedule}|"></div>
-				<div class="mb-3">
-					<label for="scheduleStart" class="form-label" th:text="#{start}">開始</label>
-					<input type="datetime-local" class="form-control" th:field="*{scheduleStart}"
-						th:errorclass="is-invalid" />
-					<div class="invalid-feedback" th:errors="*{scheduleStart}"></div>
-				</div>
-				<div class="mb-3">
-					<label for="scheduleFinish" class="form-label" th:text="#{finish}">終了</label>
-					<input type="datetime-local" class="form-control" th:field="*{scheduleFinish}"
-						th:errorclass="is-invalid" />
-					<div class="invalid-feedback" th:errors="*{scheduleFinish}"></div>
+				<div class="row">
+					<div class="mb-3 col">
+						<label for="scheduleStart" class="form-label" th:text="#{start}">開始</label>
+						<input type="datetime-local" class="form-control" th:field="*{scheduleStart}"
+							th:errorclass="is-invalid" />
+						<div class="invalid-feedback" th:errors="*{scheduleStart}"></div>
+					</div>
+					<div class="mb-3 col">
+						<label for="scheduleFinish" class="form-label" th:text="#{finish}">終了</label>
+						<input type="datetime-local" class="form-control" th:field="*{scheduleFinish}"
+							th:errorclass="is-invalid" />
+						<div class="invalid-feedback" th:errors="*{scheduleFinish}"></div>
+					</div>
 				</div>
 				<div class="mb-3">
 					<label for="reason" class="form-label" th:text="|#{overtime}#{reason}|"></label>
 					<textarea class="form-control" th:field="*{reason}" th:errorclass="is-invalid"></textarea>
 					<div class="invalid-feedback" th:errors="*{reason}"></div>
 				</div>
-
 				<div class="mb-3">
 					<input type="submit" th:value="#{apply}" class="btn btn-primary">
 					<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
 				</div>
 			</form>
-
 		</div>
-
-
-
-
-
-
-
-
-
 	</div>
 
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
