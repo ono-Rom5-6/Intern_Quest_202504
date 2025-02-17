@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.intern_quest_202504.repository.OvertimeMapper">
+	<resultMap type="spring.intern_quest_202504.domain.overtime.model.Overtime"
+		id="overtime">
+		
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="work_pattern" property="workPattern" />
+		<result column="schedule_start" property="scheduleStart" />
+		<result column="schedule_finish" property="scheduleFinish" />
+		<result column="reason" property="reason" />
+		<result column="state" property="state" />
+		<result column="approve_date" property="approveDate" />
+		<result column="approve_name" property="approveName" />
+		
+		<result column="actual_start" property="actualStart" />
+		<result column="actual_finish" property="actual_finish" />
+		<result column="rest_seconds" property="restSeconds" />
+		<result column="content" property="content" />
+		
+		<result column="apply_date" property="applyDate" />
+		<result column="worked_seconds_normal" property="workedSecondsNormal" />
+		<result column="worked_seconds_night" property="workedSecondsNight" />
+		<result column="is_holiday" property="isHoliday" />
+		<result column="is_combined" property="isCombined" />
+		<result column="is_deleted" property="isDeleted" />
+		<result column="create_date" property="createDate" />
+		
+	</resultMap>
+	
+	<insert id="insertOvertime" parameterType="overtime">
+		insert into overtime(
+			user_id,
+			work_pattern,
+			schedule_start,
+			schedule_finish,
+			reason
+		)
+		values(
+			#{userId},
+			#{workPattern},
+			#{scheduleStart},
+			#{scheduleFinish},
+			#{reason}
+		)
+	</insert>
+	
+	<select id="findOvertime" parameterType="Overtime"
+		resultMap="overtime">
+		select
+			*
+		from
+			overtime
+			where user_id = #{userId}
+	</select>
+
+	
+</mapper>
