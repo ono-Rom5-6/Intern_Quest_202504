@@ -58,7 +58,7 @@ public class OvertimeController {
 		
 		//System.out.println(overtime.getUserId());
 		
-		//TODO: 勤務パターンが適切な値かチェックするメソッドを入れること
+		//TODO: 勤務パターンが適切な値かチェックするメソッドを入れること(勤務パターンテーブル？？、追加機能)
 		System.out.println(applyForm.getMainPattern() + applyForm.getSubPattern());
 		
 		overtime.setWorkPattern(applyForm.getMainPattern() + applyForm.getSubPattern());
