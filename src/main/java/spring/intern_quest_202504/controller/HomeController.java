@@ -27,7 +27,7 @@ public class HomeController {
 		
 		model.addAttribute("thisOvertimeList", thisOvertimeList);
 		
-		
+		model.addAttribute("title", "home");
 		return "home";
 	}
 
