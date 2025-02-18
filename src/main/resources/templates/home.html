@@ -13,50 +13,40 @@
 				<h2 class="mt-2" th:text="|#{home}|"></h2>
 			</div>
 		</div>
-		
+
 		<table class="table table-striped table-hover table-bordered mt-2">
-						<thead>
-							<tr>
-								<th th:text="|#{overtime}#{schedule}|"></th>
-								<th th:text="#{state}"></th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
-								<td>未承認（テスト）</td>
-								<td class="align-middle button">
-									<a href="/overtime/report" class="btn btn-primary my-0"
-										th:text="#{report}"></a>
-								</td>
-							</tr>
-							
-							<!--
-							<th:block th:each="item : ${readingRecordList}">
-								<th:block th:switch="true">
-									 読了日がnull
-									<tr th:case="${record.finishedDate == null}" class="table-warning">
-										  それ以外
-									<tr th:case="*">
-								</th:block>
-								<td th:text="${record.title}"></td>
-								<td th:text="${record.author}"></td>
-								<td th:text="${#dates.format(record.startingDate, 'yyyy-MM-dd')}"></td>
-								<td
-									th:text="${record.finishedDate == null}? #{now.reading} : ${#dates.format(record.finishedDate, 'yyyy-MM-dd')}">
-								</td>
-								<td class="align-middle button">
-									<a th:href="@{'reading-record/detail/' + ${record.id}}" class="btn btn-primary my-0"
-										th:text="#{detail}"></a>
-								</td>
-								</tr>
-							</th:block>
-							-->
-						</tbody>
-					</table>
-		
-		
+
+			<thead>
+				<tr>
+					<th th:text="|#{overtime}#{schedule}|"></th>
+					<th th:text="#{state}"></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="item : ${thisOvertimeList}">
+
+					<tr>
+						<td th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd HH:mm(E)')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd HH:mm(E)')}|">2024年12月12日19時00分 ～
+							2024年12月12日21時00分</td>
+						<th:block th:switch="true">
+							<td th:case="${item.state == 0}" th:text="#{unapproved}"></td>
+							<td th:case="${item.state == 1}" th:text="#{rejected}"></td>
+							<td th:case="${item.state == 2}" th:text="#{remand}"></td>
+						</th:block>
+						
+						
+						<td class="align-middle button">
+							<a href="/overtime/report" class="btn btn-primary my-0" th:text="#{report}"></a>
+						</td>
+					</tr>
+				</th:block>
+				
+				
+			</tbody>
+		</table>
+
+
 	</div>
 </body>
 

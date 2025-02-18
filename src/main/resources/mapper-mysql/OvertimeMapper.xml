@@ -48,13 +48,17 @@
 		)
 	</insert>
 	
-	<select id="findOvertime" parameterType="Overtime"
+	<select id="selectThisOvertimeList" parameterType="String"
 		resultMap="overtime">
 		select
 			*
 		from
 			overtime
 			where user_id = #{userId}
+		order
+		by
+		schedule_start
+		desc
 	</select>
 
 	

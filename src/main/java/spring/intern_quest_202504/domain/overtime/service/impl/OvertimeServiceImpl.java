@@ -1,5 +1,7 @@
 package spring.intern_quest_202504.domain.overtime.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class OvertimeServiceImpl implements OvertimeService {
 	@Override
 	public void addOvertime(Overtime overtime) {
 		overtimeMapper.insertOvertime(overtime);
+	}
+	
+	@Override
+	public ArrayList<Overtime> getThisOvertimeList(String userId) {
+		return overtimeMapper.selectThisOvertimeList(userId);
 	}
 
 }

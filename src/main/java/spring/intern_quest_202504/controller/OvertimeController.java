@@ -71,7 +71,7 @@ public class OvertimeController {
 		overtimeService.addOvertime(overtime);
 
 		
-		model.addAttribute("successMessage", "残業登録が完了しました！");
+		//model.addAttribute("successMessage", "残業登録が完了しました！");
 		return "redirect:/home";
 	}
 
