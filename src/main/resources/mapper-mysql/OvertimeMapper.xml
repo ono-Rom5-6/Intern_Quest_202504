@@ -48,7 +48,7 @@
 		)
 	</insert>
 	
-	<select id="findOvertime" parameterType="Overtime"
+	<select id="selectThisOvertimeList" parameterType="String"
 		resultMap="overtime">
 		select
 			*
