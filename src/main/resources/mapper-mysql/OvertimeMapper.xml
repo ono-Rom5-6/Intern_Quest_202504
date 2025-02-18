@@ -55,6 +55,10 @@
 		from
 			overtime
 			where user_id = #{userId}
+		order
+		by
+		schedule_start
+		desc
 	</select>
 
 	

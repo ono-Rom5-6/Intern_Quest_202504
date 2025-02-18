@@ -20,17 +20,10 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String get(Model model, @AuthenticationPrincipal LoginUserDetails user) {
-		//ログインユーザーの残業を取得、表示
-		String userId = user.getLoginUser().getId();
-		System.out.println(userId);
-		List<Overtime> thisOvertimeList = overtimeService.getThisOvertimeList(userId);
-		if(thisOvertimeList == null) {
-			System.out.println("nullですよ");
-		}
-		for (Overtime overtime : thisOvertimeList) {
-            System.out.println(overtime.getId());
-        }
 		
+		String userId = user.getLoginUser().getId();
+		
+		List<Overtime> thisOvertimeList = overtimeService.getThisOvertimeList(userId);
 		
 		model.addAttribute("thisOvertimeList", thisOvertimeList);
 		
