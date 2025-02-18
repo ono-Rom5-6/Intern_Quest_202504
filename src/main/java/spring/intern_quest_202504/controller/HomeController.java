@@ -24,7 +24,6 @@ public class HomeController {
 		String userId = user.getLoginUser().getId();
 		
 		List<Overtime> thisOvertimeList = overtimeService.getThisOvertimeList(userId);
-		
 		model.addAttribute("thisOvertimeList", thisOvertimeList);
 		
 		model.addAttribute("title", "home");
