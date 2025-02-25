@@ -19,12 +19,13 @@ public class Overtime {
 	
 	private LocalDateTime actualStart;
 	private LocalDateTime actualFinish;
-	private int restSeconds;
+	private int restSecond;
 	private String content;
 	private Date applyDate;
-	private int workedSecondsNomal;
-	private int workedSecondsNight;
-	private int isHoliday;
+	private int weekdayDaytimeSecond;
+	private int weekdayNotDaytimeSecond;
+	private int holidayDaytimeSecond;
+	private int holidaydayNotDaytimeSecond;
 	private int isCombined;
 	private int isDeleted;
 	private LocalDateTime createDate;

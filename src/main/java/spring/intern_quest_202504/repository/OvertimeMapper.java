@@ -11,5 +11,7 @@ public interface OvertimeMapper {
 	public void insertOvertime(Overtime overtime);
 	
 	public ArrayList<Overtime> selectThisOvertimeList(String userId);
+	
+	public void updateReport(Overtime overtime);
 
 }

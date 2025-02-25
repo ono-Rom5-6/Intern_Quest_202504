@@ -11,5 +11,7 @@ public interface OvertimeService {
 	public void addOvertime(Overtime overtime);
 	
 	public ArrayList<Overtime> getThisOvertimeList(String userId);
+	
+	public void addReport(Overtime overtime);
 
 }
