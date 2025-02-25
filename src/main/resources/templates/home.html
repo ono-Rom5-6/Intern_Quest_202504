@@ -24,8 +24,6 @@
 			</thead>
 			<tbody>
 				<th:block th:each="item : ${thisOvertimeList}">
-					
-
 					<tr>
 						<td
 							th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd HH:mm(E)')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd HH:mm(E)')}|">
@@ -42,15 +40,10 @@
 								<a th:href="@{'overtime/report/' + ${item.id}}" class="btn btn-primary my-0"
 									th:text="#{report}"></a>
 							</td>
-
 							<td th:case="*" th:text="#{isReported}"></td>
-
 						</th:block>
-
 					</tr>
 				</th:block>
-
-
 			</tbody>
 		</table>
 
