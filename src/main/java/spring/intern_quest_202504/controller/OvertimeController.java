@@ -1,5 +1,6 @@
 package spring.intern_quest_202504.controller;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -59,7 +61,7 @@ public class OvertimeController {
 		//System.out.println(overtime.getUserId());
 		
 		//TODO: 勤務パターンが適切な値かチェックするメソッドを入れること(勤務パターンテーブル？？、追加機能)
-		System.out.println(applyForm.getMainPattern() + applyForm.getSubPattern());
+		//System.out.println(applyForm.getMainPattern() + applyForm.getSubPattern());
 		
 		overtime.setWorkPattern(applyForm.getMainPattern() + applyForm.getSubPattern());
 		
@@ -75,16 +77,59 @@ public class OvertimeController {
 		return "redirect:/home";
 	}
 
-	@GetMapping("/report")
-	public String getReport(Model model, @ModelAttribute ReportForm reportForm, BindingResult bindingResult) {
+	@GetMapping("/report/{id}")
+	public String getReport(Model model, @PathVariable String id, @ModelAttribute ReportForm reportForm,  @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
 		//model.addAttribute("overtimeForm", new OvertimeForm());
 		return "overtime/report";
 	}
 
 	@PostMapping("/report")
-	public String postReport(Model model, @ModelAttribute ReportForm reportForm, BindingResult bindingResult) {
+	public String postReport(Model model, @ModelAttribute @Validated ReportForm reportForm, BindingResult bindingResult,  @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
+		String id = reportForm.getId();
+		if (bindingResult.hasErrors()) {
+			return getReport(model, id, reportForm, loginUserDetails);
+		}
+		
+		//TODO:ユーザー確認
+		
+		
 		//TODO:報告の登録処理
-
+		Overtime overtime = new Overtime();
+		
+		overtime.setId(id);
+		overtime.setActualStart(reportForm.getActualStart());
+		overtime.setActualFinish(reportForm.getActualFinish());
+		
+		int restHour = reportForm.getRestHour();
+		int restMin = reportForm.getRestMin();
+		
+		int restSecond = 3600*restHour + 60*restMin;
+		overtime.setRestSecond(restSecond);
+		
+		Date now = new Date();
+		overtime.setApplyDate(now);
+		
+		overtime.setContent(reportForm.getContent());
+		
+		
+		
+		
+		//それぞれの分類の時間
+		/*
+		 * 終了時間から休憩時間を引き、みなし終了時間を求める
+		 * 開始時間がどの区分か判定。
+		 * 開始時間から次の区切りの時間までに終了時間があるか？
+		 * 　ある→秒数を求め、該当の区分に登録。
+		 * 　ない→区切りまでの時間をその区分に登録。その区分の開始時間を開始時間として上を繰り返す。
+		 */
+		
+		
+		
+		overtimeService.addReport(overtime);
+		
+		
+		
+		
 		return "redirect:/home";
 
 	}

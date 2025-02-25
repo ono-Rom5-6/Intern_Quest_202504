@@ -23,5 +23,10 @@ public class OvertimeServiceImpl implements OvertimeService {
 	public ArrayList<Overtime> getThisOvertimeList(String userId) {
 		return overtimeMapper.selectThisOvertimeList(userId);
 	}
+	
+	@Override
+	public void addReport(Overtime overtime) {
+		overtimeMapper.updateReport(overtime);
+	}
 
 }
