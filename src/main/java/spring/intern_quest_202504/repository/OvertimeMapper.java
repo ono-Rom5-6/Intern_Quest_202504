@@ -13,5 +13,9 @@ public interface OvertimeMapper {
 	public ArrayList<Overtime> selectThisOvertimeList(String userId);
 	
 	public void updateReport(Overtime overtime);
+	
+	public ArrayList<Overtime> selectYetCombinedList(String departmentId);
+	
+	public void updateCombine(String id, String combineId);
 
 }

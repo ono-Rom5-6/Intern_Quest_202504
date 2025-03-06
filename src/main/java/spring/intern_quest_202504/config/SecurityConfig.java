@@ -34,6 +34,8 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.requestMatchers(mvc.pattern("/login")).permitAll()
+				.requestMatchers(mvc.pattern("/overtime/combine")).hasAuthority("deputyManager")
+				
 				.anyRequest().authenticated());
 		
 		http.formLogin(login -> login

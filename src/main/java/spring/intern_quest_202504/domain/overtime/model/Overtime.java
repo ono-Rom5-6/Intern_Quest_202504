@@ -4,12 +4,16 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;
+import spring.intern_quest_202504.domain.department.model.Department;
+import spring.intern_quest_202504.domain.user.model.User;
 
 @Data
 public class Overtime {
 	private String id;
 	private String userId;
-	private String workPattern;
+	private String departmentId;
+	private String mainPattern;
+	private String subPattern;
 	private LocalDateTime scheduleStart;
 	private LocalDateTime scheduleFinish;
 	private String reason;
@@ -26,9 +30,17 @@ public class Overtime {
 	private int weekdayNotDaytimeSecond;
 	private int holidayDaytimeSecond;
 	private int holidaydayNotDaytimeSecond;
-	private int isCombined;
+	private String combineId;
 	private int isDeleted;
 	private LocalDateTime createDate;
+	
+	private Department department;
+	private User user;
+	
+	/*
+	private String userName;
+	private String departmentName;
+	*/
 
 }
 /*
