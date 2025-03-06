@@ -8,7 +8,9 @@
 		
 		<id column="id" property="id" />
 		<result column="user_id" property="userId" />
-		<result column="work_pattern" property="workPattern" />
+		<result column="department_id" property="departmentId" />
+		<result column="main_pattern" property="mainPattern" />
+		<result column="sub_pattern" property="subPattern" />
 		<result column="schedule_start" property="scheduleStart" />
 		<result column="schedule_finish" property="scheduleFinish" />
 		<result column="reason" property="reason" />
@@ -18,7 +20,7 @@
 		
 		<result column="actual_start" property="actualStart" />
 		<result column="actual_finish" property="actualFinish" />
-		<result column="rest_seconds" property="restSeconds" />
+		<result column="rest_second" property="restSecond" />
 		<result column="content" property="content" />
 		
 		<result column="apply_date" property="applyDate" />
@@ -28,23 +30,55 @@
 		<result column="holiday_daytime_second" property="holidayDaytimeSecond" />
 		<result column="holiday_not_daytime_second" property="holidaydayNotDaytimeSecond" />
 		
-		<result column="is_combined" property="isCombined" />
+		<result column="combine_id" property="combineId" />
 		<result column="is_deleted" property="isDeleted" />
 		<result column="create_date" property="createDate" />
 		
+		<association property="department" resultMap="department"/>
+		<collection property="user" ofType="spring.intern_quest_202504.domain.user.model.User">
+			<id column="id" property="id" />
+			<result column="user" property="user" />
+			<result column="pass" property="pass" />
+			<result column="name" property="name" />
+			<result column="department_id" property="departmentId" />
+			<result column="role" property="role" />
+			<result column="authority" property="authority" />
+		</collection>
+		
+	</resultMap>
+	
+	<resultMap type="spring.intern_quest_202504.domain.user.model.User"
+		id="user">
+		<id column="id" property="id" />
+		<result column="user" property="user" />
+		<result column="pass" property="pass" />
+		<result column="name" property="name" />
+		<result column="department_id" property="departmentId" />
+		<result column="role" property="role" />
+		<result column="authority" property="authority" />
+	</resultMap>
+	
+	<resultMap type="spring.intern_quest_202504.domain.department.model.Department"
+		id="department">
+		<id column="id" property="departmentId" />
+		<result column="department_name" property="name" />
 	</resultMap>
 	
 	<insert id="insertOvertime" parameterType="overtime">
 		insert into overtime(
 			user_id,
-			work_pattern,
+			department_id,
+			main_pattern,
+			sub_pattern,
 			schedule_start,
 			schedule_finish,
 			reason
 		)
 		values(
 			#{userId},
-			#{workPattern},
+			#{departmentId},
+			#{mainPattern},
+			#{subPattern},
 			#{scheduleStart},
 			#{scheduleFinish},
 			#{reason}
@@ -75,6 +109,45 @@
 			content = #{content}
 		where id = #{id}
 	</update>
+	
+	
+	<select id="selectYetCombinedList" parameterType="String"
+		resultMap="overtime">
+		select
+			*, department.name as department_name
+		from
+			overtime
+		join
+			user
+		on
+			overtime.user_id = user.id
+		join
+			department
+		on
+			overtime.department_id = department.id
+		where
+			overtime.department_id = #{departmentId}
+		and
+			overtime.combine_id is null
+		order
+		by
+		schedule_start
+		desc
+	</select>
+	
+	<update id="updateCombine">
+		update
+			overtime
+		set
+			combine_id = #{combineId}
+		where id = #{id}
+	</update>
+	
+	
+	
+<!--
+	
 
+-->
 	
 </mapper>

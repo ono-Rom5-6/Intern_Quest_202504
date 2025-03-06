@@ -1,5 +1,6 @@
 package spring.intern_quest_202504.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import spring.intern_quest_202504.application.service.UserApplicationService;
+import spring.intern_quest_202504.domain.combine.model.Combine;
+import spring.intern_quest_202504.domain.combine.service.CombineService;
 import spring.intern_quest_202504.domain.overtime.model.Overtime;
 import spring.intern_quest_202504.domain.overtime.service.OvertimeService;
 import spring.intern_quest_202504.domain.user.model.LoginUserDetails;
+import spring.intern_quest_202504.domain.user.model.User;
 import spring.intern_quest_202504.form.ApplyForm;
+import spring.intern_quest_202504.form.CombineForm;
 import spring.intern_quest_202504.form.ReportForm;
 
 @RequestMapping("/overtime")
@@ -31,6 +36,9 @@ public class OvertimeController {
 	
 	@Autowired
 	private OvertimeService overtimeService;
+	
+	@Autowired
+	private CombineService combineService;
 	
 	@Autowired
 	private MessageSource messageSource;
@@ -51,19 +59,24 @@ public class OvertimeController {
 			
 			return getApply(model, applyForm);
 		}
+		
+		User loginUser = loginUserDetails.getLoginUser();
 
 		Overtime overtime = new Overtime();
 		
 		//System.out.println(loginUserDetails.getLoginUser().getId());
 		
-		overtime.setUserId(loginUserDetails.getLoginUser().getId()); 
+		overtime.setUserId(loginUser.getId()); 
+		overtime.setDepartmentId(loginUser.getDepartmentId());
 		
 		//System.out.println(overtime.getUserId());
 		
 		//TODO: 勤務パターンが適切な値かチェックするメソッドを入れること(勤務パターンテーブル？？、追加機能)
 		//System.out.println(applyForm.getMainPattern() + applyForm.getSubPattern());
 		
-		overtime.setWorkPattern(applyForm.getMainPattern() + applyForm.getSubPattern());
+		//overtime.setWorkPattern(applyForm.getMainPattern() + applyForm.getSubPattern());
+		overtime.setMainPattern(applyForm.getMainPattern());
+		overtime.setSubPattern(applyForm.getSubPattern());
 		
 		overtime.setScheduleStart(applyForm.getScheduleStart());
 		overtime.setScheduleFinish(applyForm.getScheduleFinish());
@@ -72,8 +85,7 @@ public class OvertimeController {
 		
 		overtimeService.addOvertime(overtime);
 
-		
-		//model.addAttribute("successMessage", "残業登録が完了しました！");
+		model.addAttribute("title", "home");
 		return "redirect:/home";
 	}
 
@@ -104,6 +116,7 @@ public class OvertimeController {
 		int restMin = reportForm.getRestMin();
 		
 		int restSecond = 3600*restHour + 60*restMin;
+		System.out.println(restSecond);
 		overtime.setRestSecond(restSecond);
 		
 		Date now = new Date();
@@ -129,7 +142,7 @@ public class OvertimeController {
 		
 		
 		
-		
+		model.addAttribute("title", "home");
 		return "redirect:/home";
 
 	}
@@ -156,9 +169,51 @@ public class OvertimeController {
 	}
 
 	@PostMapping("/print")
-	public String postPrint() {
+	public String postPrint(Model model) {
 		//TODO:プリント処理
+		
+		model.addAttribute("title", "home");
+		return "redirect:/home";
 
+	}
+	
+	@GetMapping("/combine")
+	public String getCombine(Model model,  @ModelAttribute CombineForm combineForm, @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
+		String departmentId =loginUserDetails.getLoginUser().getDepartmentId();
+		
+		
+		ArrayList<Overtime> yetCombinedList = overtimeService.getYetCombinedList(departmentId);
+		model.addAttribute("yetCombinedList", yetCombinedList);
+		
+		
+		model.addAttribute("title", "combine");
+		return "overtime/combine";
+	}
+	
+	@PostMapping("/combine")
+	public String postCombine(Model model, @ModelAttribute CombineForm combineForm, @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
+		String[] overtimeIds = combineForm.getOvertimeIds();
+		
+		//insert
+		Combine newCombine = new Combine();
+		newCombine.setCreateUser(loginUserDetails.getLoginUser().getId());
+		newCombine.setDepartmentId(loginUserDetails.getLoginUser().getDepartmentId());
+		
+		combineService.createCombine(newCombine);
+		
+		String combineId = newCombine.getId();
+		
+		
+		for(String id : overtimeIds) {
+			//System.out.println(id);
+			
+			overtimeService.addCombineId(id, combineId);
+			
+			
+		}
+		
+		
+		model.addAttribute("title", "home");
 		return "redirect:/home";
 
 	}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}" lang="ja">
+
+<head>
+	<title th:text="#{combine}"></title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="row g-3">
+			<div class="container-md col-12 mt-2">
+				<h2 class="mt-2" th:text="|#{combine}|"></h2>
+				<p sec:authorize="hasAuthority('deputyManager')">次長です</p>
+				<p th:text="${#authentication.principal.loginUser.authority}"></p>
+			</div>
+		</div>
+		<form th:action="@{/overtime/combine}" method="post" th:object="${combineForm}">
+
+
+			<th:block th:each="item : ${yetCombinedList}">
+				<div class="p-2 m-2 border border-secondary rounded">
+
+					<table class="table table-bordered table-striped">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" th:value="${item.id}" th:field="*{overtimeIds}">
+							<label class="form-check-label" th:for="${overtimeIds}" th:text="#{combine.message}">
+								Default checkbox
+							</label>
+						</div>
+						<tbody>
+							<tr>
+								<th scope="row" class="table-primary" th:text="#{department.name}"></th>
+								<td th:text="${item.department.name}">営業部</td>
+								<th scope="row" class="table-primary" th:text="#{name}">氏名</th>
+								<td th:text="${item.user.name}">大阪太郎</td>
+								<th scope="row" class="table-primary" th:text="#{work.pattern}">勤務パターン</th>
+								<td th:text="#{__${item.mainPattern}__}+${item.subPattern}">早出A</td>
+							</tr>
+							<tr>
+								<th scope="row" class="table-primary" th:text="|#{overtime}#{schedule}|">残業予定時間</th>
+								<td colspan="5"
+									th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd(E) HH:mm')}|">
+									2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
+							</tr>
+							<tr>
+								<th scope="row" class="table-primary" th:text="|#{overtime}#{reason}|">残業理由</th>
+								<td colspan="5" th:text="${item.reason}">変更事項があり、取引先担当者と打ち合わせが必要になりました。</td>
+							</tr>
+
+							<tr>
+								<th scope="row" class="table-primary" th:text="|#{approve}#{day}|">承認日</th>
+								<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd(E)')}">2024年12月12日
+								</td>
+								<th scope="row" class="table-primary" th:text="|#{approve}#{person}|">承認者</th>
+								<td colspan="3" th:text="${approveName}">香川一郎</td>
+							</tr>
+							<tr>
+								<table class="table table-bordered table-striped">
+									<tbody>
+										<tr>
+											<th scope="row" class="table-info" th:text="#{actual.overtime}">実残業時間
+											</th>
+											<td colspan="5"
+												th:text="${item.actualStart != null}?|${#temporals.format(item.actualStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.actualFinish, 'yyyy/MM/dd(E) HH:mm')}| : ''">
+												2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
+										</tr>
+										<tr>
+											<th scope="row" class="table-info" th:text="#{restTime}">休憩時間</th>
+											<td colspan="5"
+												th:text="${item.restSecond != 0} ? ${item.restSecond/3600} + '時' + ${item.restSecond%3600}/60 + '分' : ''">
+												01時00分</td>
+										</tr>
+										<tr>
+											<th scope="row" class="table-info" th:text="|#{overtime}#{report}|">報告
+											</th>
+											<td colspan="5" th:text="${item.content}">変更事項があり、取引先担当者と打ち合わせを行いました。
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="table-info" th:text="|#{apply}#{day}|">申請日</th>
+											<td th:text="${#dates.format(item.applyDate, 'yyyy/MM/dd')}">2024年12月12日
+											</td>
+											<th scope="row" class="table-info" th:text="|#{apply}#{person}|">申請者
+											</th>
+											<td colspan="3" th:text="${item.user.name}">大阪太郎</td>
+										</tr>
+
+									</tbody>
+
+
+								</table>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</th:block>
+
+			<div class="mb-3">
+				<input type="submit" th:value="#{combine}" class="btn btn-primary">
+				<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
+			</div>
+		</form>
+
+
+</body>
+
+</html>
