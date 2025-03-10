@@ -32,12 +32,21 @@ public class OvertimeServiceImpl implements OvertimeService {
 	@Override
 	public ArrayList<Overtime> getYetCombinedList(String departmentId) {
 		return overtimeMapper.selectYetCombinedList(departmentId);
-		
 	}
 	
 	@Override
 	public void addCombineId(String id, String combineId) {
 		overtimeMapper.updateCombine(id, combineId);
+	}
+	
+	@Override
+	public ArrayList<Overtime> getCombinedList(String departmentId) {
+		return overtimeMapper.selectCombinedList(departmentId);
+	}
+	
+	@Override
+	public void addState(String id, int state) {
+		overtimeMapper.updateState(id, state);
 	}
 
 }

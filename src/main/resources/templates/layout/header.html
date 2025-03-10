@@ -34,7 +34,10 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a sec:authorize="hasAuthority('deputyManager')" class="dropdown-item" href="/overtime/combine" th:text="#{combine}"></a>
+								<a th:if="${#authentication.principal.loginUser.authority == 'deputyManager'}" class="dropdown-item" href="/overtime/combine" th:text="#{combine}"></a>
+							</li>
+							<li>
+								<a sec:authorize="hasAuthority('sectionManager')" class="dropdown-item" href="/overtime/approve" th:text="#{approve}"></a>
 							</li>
 							<li>
 								<form class="dropdown-item" id="logout-form" th:action="@{/logout}" method="post">

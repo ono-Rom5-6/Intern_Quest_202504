@@ -44,7 +44,11 @@
 			<result column="role" property="role" />
 			<result column="authority" property="authority" />
 		</collection>
-		
+		<collection property="combine" ofType="spring.intern_quest_202504.domain.combine.model.Combine">
+			<id column="id" property="id" />
+			<result column="create_user" property="createUser" />
+			<result column="department_id" property="departmentId" />
+		</collection>
 	</resultMap>
 	
 	<resultMap type="spring.intern_quest_202504.domain.user.model.User"
@@ -143,7 +147,43 @@
 		where id = #{id}
 	</update>
 	
+	<select id="selectCombinedList" parameterType="String"
+		resultMap="overtime">
+		select
+			*, department.name as department_name
+		from
+			overtime
+		join
+			user
+		on
+			overtime.user_id = user.id
+		join
+			department
+		on
+			overtime.department_id = department.id	
+		join
+			combine
+		on
+			overtime.combine_id = combine.id
+		where
+			combine.department_id = #{departmentId}
+		and
+			overtime.combine_id is not null
+		and
+			overtime.state = 0
+		order
+		by
+		schedule_start
+		desc
+	</select>
 	
+	<update id="updateState">
+		update
+			overtime
+		set
+			state = #{state}
+		where id = #{id}
+	</update>
 	
 <!--
 	

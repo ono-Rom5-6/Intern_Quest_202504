@@ -17,5 +17,9 @@ public interface OvertimeService {
 	public ArrayList<Overtime> getYetCombinedList(String departmentId);
 	
 	public void addCombineId(String id, String combineId);
+	
+	public ArrayList<Overtime> getCombinedList(String departmentId);
+	
+	public void addState(String id, int state);
 
 }
