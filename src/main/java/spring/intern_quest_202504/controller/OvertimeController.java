@@ -25,6 +25,7 @@ import spring.intern_quest_202504.domain.overtime.service.OvertimeService;
 import spring.intern_quest_202504.domain.user.model.LoginUserDetails;
 import spring.intern_quest_202504.domain.user.model.User;
 import spring.intern_quest_202504.form.ApplyForm;
+import spring.intern_quest_202504.form.ApproveForm;
 import spring.intern_quest_202504.form.CombineForm;
 import spring.intern_quest_202504.form.ReportForm;
 
@@ -85,8 +86,8 @@ public class OvertimeController {
 		
 		overtimeService.addOvertime(overtime);
 
-		model.addAttribute("title", "home");
-		return "redirect:/home";
+		//model.addAttribute("title", "home");
+		return "redirect:/finish";
 	}
 
 	@GetMapping("/report/{id}")
@@ -140,10 +141,8 @@ public class OvertimeController {
 		
 		overtimeService.addReport(overtime);
 		
-		
-		
-		model.addAttribute("title", "home");
-		return "redirect:/home";
+		//model.addAttribute("title", "home");
+		return "redirect:/finish";
 
 	}
 
@@ -203,19 +202,35 @@ public class OvertimeController {
 		
 		String combineId = newCombine.getId();
 		
-		
 		for(String id : overtimeIds) {
 			//System.out.println(id);
 			
-			overtimeService.addCombineId(id, combineId);
-			
-			
+			overtimeService.addCombineId(id, combineId);	
 		}
 		
-		
-		model.addAttribute("title", "home");
-		return "redirect:/home";
-
+		//model.addAttribute("title", "home");
+		return "redirect:/finish";
 	}
+	
+	@GetMapping("/approve")
+	public String getApprove(Model model,  @ModelAttribute ApproveForm approveForm, @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
+		String departmentId =loginUserDetails.getLoginUser().getDepartmentId();
+		
+		approveForm.setOvertimeList(overtimeService.getCombinedList(departmentId));
+		
+		model.addAttribute("title", "approve");
+		return "overtime/approve";
+	}
+	
+	@PostMapping("/approve")
+	public String postApprove(Model model, @ModelAttribute ApproveForm approveForm, @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
+		for(Overtime item : approveForm.getOvertimeList()) {
+			overtimeService.addState(item.getId(), item.getState());
+		}
+		
+		//model.addAttribute("title", "home");
+		return "redirect:/finish";
+	}
+	
 
 }

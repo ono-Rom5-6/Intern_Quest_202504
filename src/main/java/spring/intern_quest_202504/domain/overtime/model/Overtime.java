@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;
+import spring.intern_quest_202504.domain.combine.model.Combine;
 import spring.intern_quest_202504.domain.department.model.Department;
 import spring.intern_quest_202504.domain.user.model.User;
 
@@ -36,6 +37,7 @@ public class Overtime {
 	
 	private Department department;
 	private User user;
+	private Combine combine;
 	
 	/*
 	private String userName;
@@ -50,7 +52,7 @@ id INT AUTO_INCREMENT PRIMARY KEY,           -- ID
   schedule_start DATETIME,                     -- 残業予定時間(開始時刻)
   schedule_finish DATETIME,                    -- 残業予定時間(終了時刻)
   reason VARCHAR(1000),                        -- 残業理由
-  state TINYINT NOT NULL DEFAULT 0,            -- 状態 (0:未承認、1:却下、2:差し戻し)
+  state TINYINT NOT NULL DEFAULT 0,            -- 状態 (0:未承認、1:承認, 2:却下、3:差し戻し)
   approve_date DATE,                           -- 承認日
   approve_name VARCHAR(100)                    -- 承認者
   

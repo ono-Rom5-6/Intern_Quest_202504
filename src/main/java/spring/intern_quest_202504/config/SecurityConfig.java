@@ -35,7 +35,7 @@ public class SecurityConfig {
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.requestMatchers(mvc.pattern("/login")).permitAll()
 				.requestMatchers(mvc.pattern("/overtime/combine")).hasAuthority("deputyManager")
-				
+				.requestMatchers(mvc.pattern("/overtime/approve")).hasAuthority("sectionManager")
 				.anyRequest().authenticated());
 		
 		http.formLogin(login -> login
