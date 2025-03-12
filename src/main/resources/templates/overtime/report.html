@@ -32,13 +32,17 @@
 			<div class="row g-3">
 				<div class="input-group mb-3 col">
 					<label for="restHour" class="form-label"></label>
-					<input type="text" class="form-control" th:field="*{restHour}" aria-label="restHour" aria-describedby="restHour" />
+					<input type="text" class="form-control" th:field="*{restHour}" aria-label="restHour" aria-describedby="restHour"
+					th:errorclass="is-invalid" />
 					<span class="input-group-text" id="restHour" th:text="|#{restHour}|"></span>
+					<div class="invalid-feedback" th:errors="*{restHour}"></div>
 				</div>
 				<div class="input-group mb-3 col">
 					<label for="restMin" class="form-label"></label>
-					<input type="text" class="form-control" th:field="*{restMin}" aria-label="restMin" aria-describedby="restMin" />
+					<input type="text" class="form-control" th:field="*{restMin}" aria-label="restMin" aria-describedby="restMin" 
+					th:errorclass="is-invalid"/>
 					<span class="input-group-text" id="restMin" th:text="|#{restMin}|"></span>
+					<div class="invalid-feedback" th:errors="*{restMin}"></div>
 				</div>
 				<div class="col"></div>
 			</div>

@@ -64,8 +64,8 @@
 	
 	<resultMap type="spring.intern_quest_202504.domain.department.model.Department"
 		id="department">
-		<id column="id" property="departmentId" />
-		<result column="department_name" property="name" />
+		<id column="department_id" property="departmentId" />
+		<result column="department_name" property="departmentName" />
 	</resultMap>
 	
 	<insert id="insertOvertime" parameterType="overtime">
@@ -92,10 +92,14 @@
 	<select id="selectThisOvertimeList" parameterType="String"
 		resultMap="overtime">
 		select
-			*
+			*, department.name as department_name
 		from
 			overtime
-			where user_id = #{userId}
+		join
+			department
+		on
+			overtime.department_id = department.id
+		where user_id = #{userId}
 		order
 		by
 		schedule_start
@@ -177,13 +181,34 @@
 		desc
 	</select>
 	
-	<update id="updateState">
+	<update id="updateApprove">
 		update
 			overtime
 		set
-			state = #{state}
+			state = #{state},
+			approve_name = #{approveName},
+			approve_date = #{approveDate}
 		where id = #{id}
 	</update>
+	
+	<select id="selectOvertime" parameterType="String"
+		resultMap="overtime">
+		select
+			*, department.name as department_name
+		from
+			overtime
+		join
+			user
+		on
+			overtime.user_id = user.id
+		join
+			department
+		on
+			overtime.department_id = department.id	
+		where
+			overtime.id = #{id}
+	</select>
+	
 	
 <!--
 	

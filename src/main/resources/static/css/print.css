@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+@media print {
+	.no-print {
+		display: none;
+	}
+	.title {
+		padding-top: 10mm;
+	}
+	.print {
+    padding-top: 5mm;
+	width: 210mm;
+	height: 297mm;
+  }
+}
+
+@page {
+	size: A4 portrait;
+	margin: 0mm 5mm;
+}

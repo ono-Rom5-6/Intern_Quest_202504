@@ -20,6 +20,8 @@ public interface OvertimeService {
 	
 	public ArrayList<Overtime> getCombinedList(String departmentId);
 	
-	public void addState(String id, int state);
+	public void approve(Overtime overtime);
+	
+	public Overtime getOvertime(String id);
 
 }

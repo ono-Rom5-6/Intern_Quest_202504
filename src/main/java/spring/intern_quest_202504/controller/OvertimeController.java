@@ -1,7 +1,7 @@
 package spring.intern_quest_202504.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,7 +120,7 @@ public class OvertimeController {
 		System.out.println(restSecond);
 		overtime.setRestSecond(restSecond);
 		
-		Date now = new Date();
+		LocalDateTime now = LocalDateTime.now();
 		overtime.setApplyDate(now);
 		
 		overtime.setContent(reportForm.getContent());
@@ -152,18 +152,22 @@ public class OvertimeController {
 		return "overtime/select";
 
 	}
-
+/*
 	@PostMapping("/select")
 	public String postSlect() {
 		//TODO:パラメータを受け取って渡す
 
 		return getPrint();
 	}
-
-	@GetMapping("/print")
-	public String getPrint() {
-		//TODO:パラメータを受け取って渡す
-
+*/
+	@GetMapping("/print/{id}")
+	public String getPrint(Model model, @PathVariable String id) {
+		//TODO:user確認
+		
+		Overtime overtime = overtimeService.getOvertime(id);
+		
+		//System.out.println(overtime.getApproveName());
+		model.addAttribute("item", overtime);
 		return "overtime/print";
 	}
 
@@ -224,8 +228,20 @@ public class OvertimeController {
 	
 	@PostMapping("/approve")
 	public String postApprove(Model model, @ModelAttribute ApproveForm approveForm, @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
+		String approveName = loginUserDetails.getLoginUser().getName();
+		LocalDateTime now = LocalDateTime.now();
 		for(Overtime item : approveForm.getOvertimeList()) {
-			overtimeService.addState(item.getId(), item.getState());
+			
+			//状態だけでなく、承認者と承認日も必要じゃん？
+			Overtime overtime = new Overtime();
+			
+			overtime.setId(item.getId());
+			overtime.setState(item.getState());
+			overtime.setApproveDate(now);
+			overtime.setApproveName(approveName);
+			
+			overtimeService.approve(overtime);
+			//overtimeService.addState(item.getId(), item.getState());
 		}
 		
 		//model.addAttribute("title", "home");

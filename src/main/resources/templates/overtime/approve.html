@@ -41,7 +41,7 @@
 						<tbody>
 							<tr>
 								<th scope="row" class="table-primary" th:text="#{department.name}"></th>
-								<td th:text="${item.department.name}">営業部</td>
+								<td th:text="${item.department.departmentName}">営業部</td>
 								<th scope="row" class="table-primary" th:text="#{name}">氏名</th>
 								<td th:text="${item.user.name}">大阪太郎</td>
 								<th scope="row" class="table-primary" th:text="#{work.pattern}">勤務パターン</th>
@@ -60,10 +60,10 @@
 
 							<tr>
 								<th scope="row" class="table-primary" th:text="|#{approve}#{day}|">承認日</th>
-								<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd(E)')}">2024年12月12日
+								<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd')}">2024年12月12日
 								</td>
 								<th scope="row" class="table-primary" th:text="|#{approve}#{person}|">承認者</th>
-								<td colspan="3" th:text="${approveName}">香川一郎</td>
+								<td colspan="3" th:text="${item.approveName}">香川一郎</td>
 							</tr>
 							<tr>
 								<table class="table table-bordered table-striped">
@@ -89,7 +89,7 @@
 										</tr>
 										<tr>
 											<th scope="row" class="table-info" th:text="|#{apply}#{day}|">申請日</th>
-											<td th:text="${#dates.format(item.applyDate, 'yyyy/MM/dd')}">2024年12月12日
+											<td th:text="${#temporals.format(item.applyDate, 'yyyy/MM/dd')}">2024年12月12日
 											</td>
 											<th scope="row" class="table-info" th:text="|#{apply}#{person}|">申請者
 											</th>

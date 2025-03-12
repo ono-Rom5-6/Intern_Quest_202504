@@ -18,7 +18,6 @@
 
 			<th:block th:each="item : ${yetCombinedList}">
 				<div class="p-2 m-2 border border-secondary rounded">
-
 					<table class="table table-bordered table-striped">
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" th:value="${item.id}" th:field="*{overtimeIds}">
@@ -29,64 +28,56 @@
 						<tbody>
 							<tr>
 								<th scope="row" class="table-primary" th:text="#{department.name}"></th>
-								<td th:text="${item.department.name}">営業部</td>
-								<th scope="row" class="table-primary" th:text="#{name}">氏名</th>
-								<td th:text="${item.user.name}">大阪太郎</td>
-								<th scope="row" class="table-primary" th:text="#{work.pattern}">勤務パターン</th>
-								<td th:text="#{__${item.mainPattern}__}+${item.subPattern}">早出A</td>
+								<td th:text="${item.department.departmentName}"></td>
+								<th scope="row" class="table-primary" th:text="#{name}"></th>
+								<td th:text="${item.user.name}"></td>
+								<th scope="row" class="table-primary" th:text="#{work.pattern}"></th>
+								<td th:text="#{__${item.mainPattern}__}+${item.subPattern}"></td>
 							</tr>
 							<tr>
-								<th scope="row" class="table-primary" th:text="|#{overtime}#{schedule}|">残業予定時間</th>
+								<th scope="row" class="table-primary" th:text="|#{overtime}#{schedule}|"></th>
 								<td colspan="5"
 									th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd(E) HH:mm')}|">
-									2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
+								</td>
 							</tr>
 							<tr>
-								<th scope="row" class="table-primary" th:text="|#{overtime}#{reason}|">残業理由</th>
-								<td colspan="5" th:text="${item.reason}">変更事項があり、取引先担当者と打ち合わせが必要になりました。</td>
+								<th scope="row" class="table-primary" th:text="|#{overtime}#{reason}|"></th>
+								<td colspan="5" th:text="${item.reason}"></td>
 							</tr>
 
 							<tr>
-								<th scope="row" class="table-primary" th:text="|#{approve}#{day}|">承認日</th>
-								<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd(E)')}">2024年12月12日
+								<th scope="row" class="table-primary" th:text="|#{approve}#{day}|"></th>
+								<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd')}">
 								</td>
-								<th scope="row" class="table-primary" th:text="|#{approve}#{person}|">承認者</th>
-								<td colspan="3" th:text="${approveName}">香川一郎</td>
+								<th scope="row" class="table-primary" th:text="|#{approve}#{person}|"></th>
+								<td colspan="3" th:text="${item.approveName}"></td>
 							</tr>
 							<tr>
 								<table class="table table-bordered table-striped">
 									<tbody>
 										<tr>
-											<th scope="row" class="table-info" th:text="#{actual.overtime}">実残業時間
-											</th>
+											<th scope="row" class="table-info" th:text="#{actual.overtime}"></th>
 											<td colspan="5"
 												th:text="${item.actualStart != null}?|${#temporals.format(item.actualStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.actualFinish, 'yyyy/MM/dd(E) HH:mm')}| : ''">
-												2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
+												</td>
 										</tr>
 										<tr>
-											<th scope="row" class="table-info" th:text="#{restTime}">休憩時間</th>
+											<th scope="row" class="table-info" th:text="#{restTime}"></th>
 											<td colspan="5"
 												th:text="${item.restSecond != 0} ? ${item.restSecond/3600} + '時' + ${item.restSecond%3600}/60 + '分' : ''">
-												01時00分</td>
+												</td>
 										</tr>
 										<tr>
-											<th scope="row" class="table-info" th:text="|#{overtime}#{report}|">報告
-											</th>
-											<td colspan="5" th:text="${item.content}">変更事項があり、取引先担当者と打ち合わせを行いました。
-											</td>
+											<th scope="row" class="table-info" th:text="|#{overtime}#{report}|"></th>
+											<td colspan="5" th:text="${item.content}"></td>
 										</tr>
 										<tr>
-											<th scope="row" class="table-info" th:text="|#{apply}#{day}|">申請日</th>
-											<td th:text="${#dates.format(item.applyDate, 'yyyy/MM/dd')}">2024年12月12日
-											</td>
-											<th scope="row" class="table-info" th:text="|#{apply}#{person}|">申請者
-											</th>
-											<td colspan="3" th:text="${item.user.name}">大阪太郎</td>
+											<th scope="row" class="table-info" th:text="|#{apply}#{day}|"></th>
+											<td th:text="${#temporals.format(item.applyDate, 'yyyy/MM/dd')}"></td>
+											<th scope="row" class="table-info" th:text="|#{apply}#{person}|"></th>
+											<td colspan="3" th:text="${item.user.name}"></td>
 										</tr>
-
 									</tbody>
-
-
 								</table>
 							</tr>
 						</tbody>
