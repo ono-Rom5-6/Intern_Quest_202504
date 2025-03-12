@@ -1,7 +1,6 @@
 package spring.intern_quest_202504.domain.overtime.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import lombok.Data;
 import spring.intern_quest_202504.domain.combine.model.Combine;
@@ -19,14 +18,14 @@ public class Overtime {
 	private LocalDateTime scheduleFinish;
 	private String reason;
 	private int state;
-	private Date approveDate;
+	private LocalDateTime approveDate;
 	private String approveName;
 	
 	private LocalDateTime actualStart;
 	private LocalDateTime actualFinish;
 	private int restSecond;
 	private String content;
-	private Date applyDate;
+	private LocalDateTime applyDate;
 	private int weekdayDaytimeSecond;
 	private int weekdayNotDaytimeSecond;
 	private int holidayDaytimeSecond;

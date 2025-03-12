@@ -3,80 +3,83 @@
 	layout:decorate="~{layout/layout}" lang="ja">
 
 <head>
+	<link th:href="@{/css/print.css}" rel="stylesheet" media="print">
+	
 	<title th:text="#{print}"></title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="row g-3">
-			<div class="container-md col-12 mt-2">
-				<h2 class="mt-2" th:text="|#{print}|"></h2>
+			<div class="container-md col-12 mt-2 title">
+				<h2 class="mt-2" th:text="|#{overtime}#{apply.paper}|"></h2>
 			</div>
 		</div>
-		<form th:action="@{/overtime/print}" method="post">
-			<div class="p-2 m-2 border border-secondary rounded">
+		<div class="p-2 m-2 border border-secondary rounded">
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th scope="row" class="table-primary" th:text="#{department.name}"></th>
+						<td th:text="${item.department.departmentName}"></td>
+						<th scope="row" class="table-primary" th:text="#{name}"></th>
+						<td th:text="${item.user.name}"></td>
+						<th scope="row" class="table-primary" th:text="#{work.pattern}"></th>
+						<td th:text="#{__${item.mainPattern}__}+${item.subPattern}"></td>
+					</tr>
+					<tr>
+						<th scope="row" class="table-primary" th:text="|#{overtime}#{schedule}|"></th>
+						<td colspan="5"
+							th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd(E) HH:mm')}|">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row" class="table-primary" th:text="|#{overtime}#{reason}|"></th>
+						<td colspan="5" th:text="${item.reason}"></td>
+					</tr>
 
-				<table class="table table-bordered table-striped">
-					<tbody>
-						<tr>
-							<th scope="row" class="table-primary">部署名</th>
-							<td>営業部</td>
-							<th scope="row" class="table-primary">氏名</th>
-							<td>大阪太郎</td>
-							<th scope="row" class="table-primary">勤務パターン</th>
-							<td>早出A</td>
-						</tr>
-						<tr>
-							<th scope="row" class="table-primary">残業予定時間</th>
-							<td colspan="5">2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
-						</tr>
-						<tr>
-							<th scope="row" class="table-primary">残業理由</th>
-							<td colspan="5">変更事項があり、取引先担当者と打ち合わせが必要になりました。</td>
-						</tr>
-
-						<tr>
-							<th scope="row" class="table-primary">承認日</th>
-							<td>2024年12月12日</td>
-							<th scope="row" class="table-primary">承認者</th>
-							<td colspan="3">香川一郎</td>
-						</tr>
-						<tr>
-							<table class="table table-bordered table-striped">
-								<tbody>
-									<tr>
-										<th scope="row" class="table-info">実残業時間</th>
-										<td colspan="5">2024年12月12日19時00分 ～ 2024年12月12日21時00分</td>
-									</tr>
-									<tr>
-										<th scope="row" class="table-info">休憩時間</th>
-										<td colspan="5">01時00分</td>
-									</tr>
-									<tr>
-										<th scope="row" class="table-info">残業報告</th>
-										<td colspan="5">変更事項があり、取引先担当者と打ち合わせを行いました。</td>
-									</tr>
-									<tr>
-										<th scope="row" class="table-info">申請日</th>
-										<td>2024年12月12日</td>
-										<th scope="row" class="table-info">申請者</th>
-										<td colspan="3">大阪太郎</td>
-									</tr>
-
-								</tbody>
-							</table>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<div class="mb-3">
-				<input type="submit" th:value="#{print}" class="btn btn-primary">
-				<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
-			</div>
-		</form>
-
-
+					<tr>
+						<th scope="row" class="table-primary" th:text="|#{approve}#{day}|"></th>
+						<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd')}">
+						</td>
+						<th scope="row" class="table-primary" th:text="|#{approve}#{person}|"></th>
+						<td colspan="3" th:text="${item.approveName}"></td>
+					</tr>
+					<tr>
+						<table class="table table-bordered table-striped">
+							<tbody>
+								<tr>
+									<th scope="row" class="table-info" th:text="#{actual.overtime}"></th>
+									<td colspan="5"
+										th:text="${item.actualStart != null}?|${#temporals.format(item.actualStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.actualFinish, 'yyyy/MM/dd(E) HH:mm')}| : ''">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row" class="table-info" th:text="#{restTime}"></th>
+									<td colspan="5"
+										th:text="${item.restSecond != 0} ? ${item.restSecond/3600} + '時' + ${item.restSecond%3600}/60 + '分' : ''">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row" class="table-info" th:text="|#{overtime}#{report}|"></th>
+									<td colspan="5" th:text="${item.content}"></td>
+								</tr>
+								<tr>
+									<th scope="row" class="table-info" th:text="|#{apply}#{day}|"></th>
+									<td th:text="${#temporals.format(item.applyDate, 'yyyy/MM/dd')}"></td>
+									<th scope="row" class="table-info" th:text="|#{apply}#{person}|"></th>
+									<td colspan="3" th:text="${item.user.name}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="mb-3 no-print">
+			<button  onclick="window.print(); return false;" class="btn btn-primary">このページを印刷する</button >
+			<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
+		</div>
+		
 </body>
 
 </html>

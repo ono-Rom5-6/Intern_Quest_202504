@@ -42,6 +42,10 @@
 							</td>
 							<td th:case="*" th:text="#{isReported}"></td>
 						</th:block>
+						<td>
+							<a th:href="@{'overtime/print/' + ${item.id}}" class="btn btn-success my-0"
+									th:text="#{print}"></a>
+						</td>
 					</tr>
 				</th:block>
 			</tbody>

@@ -45,8 +45,13 @@ public class OvertimeServiceImpl implements OvertimeService {
 	}
 	
 	@Override
-	public void addState(String id, int state) {
-		overtimeMapper.updateState(id, state);
+	public void approve(Overtime overtime) {
+		overtimeMapper.updateApprove(overtime);
+	}
+	
+	@Override
+	public Overtime getOvertime(String id) {
+		return overtimeMapper.selectOvertime(id);
 	}
 
 }
