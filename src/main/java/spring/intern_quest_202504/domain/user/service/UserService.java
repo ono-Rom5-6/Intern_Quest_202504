@@ -1,3 +1,4 @@
+//ユーザーテーブル用
 package spring.intern_quest_202504.domain.user.service;
 
 import org.springframework.stereotype.Service;

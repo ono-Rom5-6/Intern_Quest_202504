@@ -12,17 +12,16 @@
 			<div class="container-md col-12 mt-2">
 				<h2 class="mt-2" th:text="|#{combine}|"></h2>
 			</div>
+			<p th:if="${yetCombinedList == null or #lists.isEmpty(yetCombinedList)}" th:text="#{empty}"></p>
 		</div>
 		<form th:action="@{/overtime/combine}" method="post" th:object="${combineForm}">
-
-
 			<th:block th:each="item : ${yetCombinedList}">
 				<div class="p-2 m-2 border border-secondary rounded">
 					<table class="table table-bordered table-striped">
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" th:value="${item.id}" th:field="*{overtimeIds}">
-							<label class="form-check-label" th:for="${overtimeIds}" th:text="#{combine.message}">
-								Default checkbox
+							<label class="form-check-label">
+								<input class="form-check-input" type="checkbox" th:value="${item.id}" th:field="*{overtimeIds}">
+								<span th:text="#{combine.message}"></span>
 							</label>
 						</div>
 						<tbody>
@@ -36,19 +35,15 @@
 							</tr>
 							<tr>
 								<th scope="row" class="table-primary" th:text="|#{overtime}#{schedule}|"></th>
-								<td colspan="5"
-									th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd(E) HH:mm')}|">
-								</td>
+								<td colspan="5" th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd(E) HH:mm')}|"></td>
 							</tr>
 							<tr>
 								<th scope="row" class="table-primary" th:text="|#{overtime}#{reason}|"></th>
 								<td colspan="5" th:text="${item.reason}"></td>
 							</tr>
-
 							<tr>
 								<th scope="row" class="table-primary" th:text="|#{approve}#{day}|"></th>
-								<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd')}">
-								</td>
+								<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd')}"></td>
 								<th scope="row" class="table-primary" th:text="|#{approve}#{person}|"></th>
 								<td colspan="3" th:text="${item.approveName}"></td>
 							</tr>
@@ -57,15 +52,11 @@
 									<tbody>
 										<tr>
 											<th scope="row" class="table-info" th:text="#{actual.overtime}"></th>
-											<td colspan="5"
-												th:text="${item.actualStart != null}?|${#temporals.format(item.actualStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.actualFinish, 'yyyy/MM/dd(E) HH:mm')}| : ''">
-												</td>
+											<td colspan="5" th:text="${item.actualStart != null}?|${#temporals.format(item.actualStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.actualFinish, 'yyyy/MM/dd(E) HH:mm')}| : ''"></td>
 										</tr>
 										<tr>
 											<th scope="row" class="table-info" th:text="#{restTime}"></th>
-											<td colspan="5"
-												th:text="${item.restSecond != 0} ? ${item.restSecond/3600} + '時' + ${item.restSecond%3600}/60 + '分' : ''">
-												</td>
+											<td colspan="5" th:text="${item.restSecond != 0} ? ${item.restSecond/3600} + '時' + ${item.restSecond%3600}/60 + '分' : ''"></td>
 										</tr>
 										<tr>
 											<th scope="row" class="table-info" th:text="|#{overtime}#{report}|"></th>
@@ -83,16 +74,11 @@
 						</tbody>
 					</table>
 				</div>
-
 			</th:block>
-
 			<div class="mb-3">
 				<input type="submit" th:value="#{combine}" class="btn btn-primary">
 				<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
 			</div>
 		</form>
-
-
 </body>
-
 </html>

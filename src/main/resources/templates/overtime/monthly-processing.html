@@ -3,36 +3,29 @@
 	layout:decorate="~{layout/layout}" lang="ja">
 
 <head>
-	<title th:text="#{approve}"></title>
+	<link th:href="@{/css/print.css}" rel="stylesheet" media="print">
+
+	<title th:text="#{monthly.processing}"></title>
 </head>
 
 <body>
 	<div layout:fragment="content">
-		<div class="row g-3">
+		<div class="row g-3 title">
 			<div class="container-md col-12 mt-2">
-				<h2 class="mt-2" th:text="|#{approve}|"></h2>
+				<h2 class="mt-2" th:text="|#{monthly.processing}|"></h2>
 			</div>
-			<p th:if="${approveForm.overtimeList == null or #lists.isEmpty(approveForm.overtimeList)}" th:text="#{empty}"></p>
+			<p th:if="${monthlyProcessingList == null or #lists.isEmpty(monthlyProcessingList)}" th:text="#{empty}"></p>
 		</div>
-		<form th:action="@{/overtime/approve}" method="post" th:object="${approveForm}">
-			<th:block th:each="item, itemStat : ${approveForm.overtimeList}">
+		<th:block th:each="item : ${monthlyProcessingList}">
+			<div class="page">
+				<br>
 				<div class="p-2 m-2 border border-secondary rounded">
-					<table class="table table-bordered table-striped">
-						<div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" th:field="*{overtimeList[__${itemStat.index}__].state}" value="1" >
-								<label class="form-check-label" th:for="*{overtimeList[__${itemStat.index}__].state}" th:text="#{approve}">1</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" th:field="*{overtimeList[__${itemStat.index}__].state}" value="2">
-								<label class="form-check-label" th:for="*{overtimeList[__${itemStat.index}__].state}" th:text="#{reject}">1</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" th:field="*{overtimeList[__${itemStat.index}__].state}" value="3">
-								<label class="form-check-label" th:for="*{overtimeList[__${itemStat.index}__].state}" th:text="#{return}">1</label>
-							</div>
-							<input type="hidden" th:field="*{overtimeList[__${itemStat.index}__].id}">
+					<div class="row g-3">
+						<div class="container-md col-12 mt-2">
+							<h2 class="mt-2" th:text="|#{overtime}#{apply.paper}|"></h2>
 						</div>
+					</div>
+					<table class="table table-bordered table-striped">
 						<tbody>
 							<tr>
 								<th scope="row" class="table-primary" th:text="#{department.name}"></th>
@@ -83,16 +76,11 @@
 						</tbody>
 					</table>
 				</div>
-
-			</th:block>
-
-			<div class="mb-3">
-				<input type="submit" th:value="#{approve}" class="btn btn-primary">
-				<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
 			</div>
-		</form>
-
-
+		</th:block>
+		<div class="mb-3 no-print">
+			<button onclick="window.print(); return false;" class="btn btn-primary" th:text="#{print}"></button>
+			<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
+		</div>
 </body>
-
 </html>

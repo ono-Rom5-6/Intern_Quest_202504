@@ -12,7 +12,6 @@ public class CombineServiceImpl implements CombineService {
 	@Autowired
 	private CombineMapper combineMapper;
 	
-	
 	@Override
 	public void createCombine(Combine combine) {
 		combineMapper.insertCombine(combine);

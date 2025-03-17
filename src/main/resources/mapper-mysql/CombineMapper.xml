@@ -8,7 +8,6 @@
 		<id column="id" property="id" />
 		<result column="create_user" property="createUser" />
 		<result column="department_id" property="departmentId" />
-		
 	</resultMap>
 	
 	<insert id="insertCombine" useGeneratedKeys="true" keyProperty="id">

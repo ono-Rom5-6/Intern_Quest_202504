@@ -1,3 +1,4 @@
+//残業テーブル用
 package spring.intern_quest_202504.domain.overtime.service;
 
 import java.util.ArrayList;
@@ -23,5 +24,7 @@ public interface OvertimeService {
 	public void approve(Overtime overtime);
 	
 	public Overtime getOvertime(String id);
+	
+	public ArrayList<Overtime> getMonthlyProcessingList(String departmentId);
 
 }

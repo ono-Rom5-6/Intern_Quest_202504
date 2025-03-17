@@ -5,7 +5,6 @@
 <mapper namespace="spring.intern_quest_202504.repository.OvertimeMapper">
 	<resultMap type="spring.intern_quest_202504.domain.overtime.model.Overtime"
 		id="overtime">
-		
 		<id column="id" property="id" />
 		<result column="user_id" property="userId" />
 		<result column="department_id" property="departmentId" />
@@ -118,7 +117,6 @@
 		where id = #{id}
 	</update>
 	
-	
 	<select id="selectYetCombinedList" parameterType="String"
 		resultMap="overtime">
 		select
@@ -209,10 +207,31 @@
 			overtime.id = #{id}
 	</select>
 	
-	
-<!--
-	
-
--->
+	<select id="selectMonthlyProcessingList" parameterType="String"
+		resultMap="overtime">
+		select
+			*, department.name as department_name
+		from
+			overtime
+		join
+			user
+		on
+			overtime.user_id = user.id
+		join
+			department
+		on
+			overtime.department_id = department.id	
+		where
+			overtime.department_id = #{departmentId}
+		and
+			date_format(approve_date, '%Y-%m')
+				= date_format(curdate() - interval 1 month, '%Y-%m')
+		and
+			overtime.state = 1
+		order
+		by
+		schedule_start
+		desc
+	</select>
 	
 </mapper>

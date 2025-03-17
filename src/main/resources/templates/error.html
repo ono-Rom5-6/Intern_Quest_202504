@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link th:href="@{/css/layout.css}" rel="stylesheet">
+	<title th:text="#{error}"></title>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md background">
+		<span class="navbar-brand" th:text="#{overtime.app}"></span>
+	</nav>
+	<h1 th:text="${status} + '' + ${error}"></h1>
+	<a href="/login" class="btn btn-success my-0" th:text="#{back.login}"></a>
+	<a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary" th:text="#{back.before}"></a>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
+</body>
+</html>

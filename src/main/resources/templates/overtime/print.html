@@ -28,9 +28,7 @@
 					</tr>
 					<tr>
 						<th scope="row" class="table-primary" th:text="|#{overtime}#{schedule}|"></th>
-						<td colspan="5"
-							th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd(E) HH:mm')}|">
-						</td>
+						<td colspan="5" th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd(E) HH:mm')}|"></td>
 					</tr>
 					<tr>
 						<th scope="row" class="table-primary" th:text="|#{overtime}#{reason}|"></th>
@@ -39,8 +37,7 @@
 
 					<tr>
 						<th scope="row" class="table-primary" th:text="|#{approve}#{day}|"></th>
-						<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd')}">
-						</td>
+						<td th:text="${#temporals.format(item.approveDate, 'yyyy/MM/dd')}"></td>
 						<th scope="row" class="table-primary" th:text="|#{approve}#{person}|"></th>
 						<td colspan="3" th:text="${item.approveName}"></td>
 					</tr>
@@ -49,15 +46,11 @@
 							<tbody>
 								<tr>
 									<th scope="row" class="table-info" th:text="#{actual.overtime}"></th>
-									<td colspan="5"
-										th:text="${item.actualStart != null}?|${#temporals.format(item.actualStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.actualFinish, 'yyyy/MM/dd(E) HH:mm')}| : ''">
-									</td>
+									<td colspan="5" th:text="${item.actualStart != null}?|${#temporals.format(item.actualStart, 'yyyy/MM/dd(E) HH:mm')}～${#temporals.format(item.actualFinish, 'yyyy/MM/dd(E) HH:mm')}| : ''"></td>
 								</tr>
 								<tr>
 									<th scope="row" class="table-info" th:text="#{restTime}"></th>
-									<td colspan="5"
-										th:text="${item.restSecond != 0} ? ${item.restSecond/3600} + '時' + ${item.restSecond%3600}/60 + '分' : ''">
-									</td>
+									<td colspan="5" th:text="${item.restSecond != 0} ? ${item.restSecond/3600} + '時' + ${item.restSecond%3600}/60 + '分' : ''"></td>
 								</tr>
 								<tr>
 									<th scope="row" class="table-info" th:text="|#{overtime}#{report}|"></th>
@@ -76,7 +69,7 @@
 			</table>
 		</div>
 		<div class="mb-3 no-print">
-			<button  onclick="window.print(); return false;" class="btn btn-primary">このページを印刷する</button >
+			<button  onclick="window.print(); return false;" class="btn btn-primary" th:text="#{print}"></button >
 			<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
 		</div>
 		
