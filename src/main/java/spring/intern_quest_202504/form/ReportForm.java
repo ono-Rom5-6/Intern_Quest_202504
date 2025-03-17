@@ -1,3 +1,4 @@
+//報告フォーム
 package spring.intern_quest_202504.form;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,6 @@ import lombok.Data;
 
 @Data
 public class ReportForm {
-	//TODO:バリデーション
 	@NotNull
 	private String id;
 	

@@ -24,27 +24,21 @@
 			<tbody>
 				<th:block th:each="item : ${thisOvertimeList}">
 					<tr>
-						<td
-							th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd HH:mm(E)')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd HH:mm(E)')}|">
-							2024年12月12日19時00分 ～
-							2024年12月12日21時00分</td>
+						<td th:text="|${#temporals.format(item.scheduleStart, 'yyyy/MM/dd HH:mm(E)')}～${#temporals.format(item.scheduleFinish, 'yyyy/MM/dd HH:mm(E)')}|"></td>
 						<th:block th:switch="true">
 							<td th:case="${item.state == 0}" th:text="#{unapproved}"></td>
 							<td th:case="${item.state == 1}" th:text="#{approve}"></td>
 							<td th:case="${item.state == 2}" th:text="#{reject}"></td>
 							<td th:case="${item.state == 3}" th:text="#{return}"></td>
-							
 						</th:block>
 						<th:block th:switch="true">
 							<td th:case="${item.actualStart == null}" class="align-middle button">
-								<a th:href="@{'overtime/report/' + ${item.id}}" class="btn btn-primary my-0"
-									th:text="#{report}"></a>
+								<a th:href="@{'overtime/report/' + ${item.id}}" class="btn btn-primary my-0" th:text="#{report}"></a>
 							</td>
 							<td th:case="*" th:text="#{isReported}"></td>
 						</th:block>
 						<td>
-							<a th:href="@{'overtime/print/' + ${item.id}}" class="btn btn-success my-0"
-									th:text="#{print}"></a>
+							<a th:href="@{'overtime/print/' + ${item.id}}" class="btn btn-success my-0" th:text="#{print}"></a>
 						</td>
 					</tr>
 				</th:block>

@@ -1,3 +1,4 @@
+//ログイン画面の表示
 package spring.intern_quest_202504.controller;
 
 import org.springframework.stereotype.Controller;

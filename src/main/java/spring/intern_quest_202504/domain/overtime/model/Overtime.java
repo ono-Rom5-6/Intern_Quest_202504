@@ -1,3 +1,4 @@
+//残業テーブル用
 package spring.intern_quest_202504.domain.overtime.model;
 
 import java.time.LocalDateTime;

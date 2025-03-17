@@ -23,5 +23,4 @@
 			where user = #{user}
 	</select>
 	
-	
 </mapper>

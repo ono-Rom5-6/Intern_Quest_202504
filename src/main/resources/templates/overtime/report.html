@@ -16,31 +16,26 @@
 		<form th:action="@{/overtime/report}" th:object="${reportForm}" method="post">
 			<div th:text="|#{actual.overtime}|"></div>
 			<div class="mb-3">
-				<label for="actualStart" class="form-label" th:text="#{start}">開始</label>
-				<input type="datetime-local" class="form-control" th:field="*{actualStart}"
-					th:errorclass="is-invalid" />
+				<label for="actualStart" class="form-label" th:text="#{start}"></label>
+				<input type="datetime-local" class="form-control" th:field="*{actualStart}" th:errorclass="is-invalid" />
 				<div class="invalid-feedback" th:errors="*{actualStart}"></div>
 			</div>
 			<div class="mb-3">
-				<label for="actualFinish" class="form-label" th:text="#{finish}">終了</label>
-				<input type="datetime-local" class="form-control" th:field="*{actualFinish}"
-					th:errorclass="is-invalid" />
+				<label for="actualFinish" class="form-label" th:text="#{finish}"></label>
+				<input type="datetime-local" class="form-control" th:field="*{actualFinish}" th:errorclass="is-invalid" />
 				<div class="invalid-feedback" th:errors="*{actualFinish}"></div>
 			</div>
-
 			<div th:text="|#{restTime}|"></div>
 			<div class="row g-3">
 				<div class="input-group mb-3 col">
 					<label for="restHour" class="form-label"></label>
-					<input type="text" class="form-control" th:field="*{restHour}" aria-label="restHour" aria-describedby="restHour"
-					th:errorclass="is-invalid" />
+					<input type="text" class="form-control" th:field="*{restHour}" aria-label="restHour" aria-describedby="restHour" th:errorclass="is-invalid" />
 					<span class="input-group-text" id="restHour" th:text="|#{restHour}|"></span>
 					<div class="invalid-feedback" th:errors="*{restHour}"></div>
 				</div>
 				<div class="input-group mb-3 col">
 					<label for="restMin" class="form-label"></label>
-					<input type="text" class="form-control" th:field="*{restMin}" aria-label="restMin" aria-describedby="restMin" 
-					th:errorclass="is-invalid"/>
+					<input type="text" class="form-control" th:field="*{restMin}" aria-label="restMin" aria-describedby="restMin" th:errorclass="is-invalid"/>
 					<span class="input-group-text" id="restMin" th:text="|#{restMin}|"></span>
 					<div class="invalid-feedback" th:errors="*{restMin}"></div>
 				</div>
@@ -51,7 +46,7 @@
 				<textarea class="form-control" th:field="*{content}" th:errorclass="is-invalid"></textarea>
 				<div class="invalid-feedback" th:errors="*{content}"></div>
 			</div>
-			
+
 			<input type="hidden" th:field="*{id}" />
 
 			<div class="mb-3">
@@ -59,8 +54,6 @@
 				<a href="/home" class="btn btn-success" th:text="#{back.home}"></a>
 			</div>
 		</form>
-
-
 	</div>
 </body>
 

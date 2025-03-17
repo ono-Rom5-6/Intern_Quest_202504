@@ -23,5 +23,7 @@ public interface OvertimeMapper {
 	public void updateApprove(Overtime overtime);
 	
 	public Overtime selectOvertime(String id);
+	
+	public ArrayList<Overtime> selectMonthlyProcessingList(String departmentId);
 
 }

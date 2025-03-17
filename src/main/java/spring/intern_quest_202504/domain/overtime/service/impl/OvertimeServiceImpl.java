@@ -53,5 +53,10 @@ public class OvertimeServiceImpl implements OvertimeService {
 	public Overtime getOvertime(String id) {
 		return overtimeMapper.selectOvertime(id);
 	}
+	
+	@Override
+	public ArrayList<Overtime> getMonthlyProcessingList(String departmentId) {
+		return overtimeMapper.selectMonthlyProcessingList(departmentId);
+	}
 
 }

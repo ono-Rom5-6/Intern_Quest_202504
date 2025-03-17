@@ -1,3 +1,4 @@
+//ホーム画面の表示
 package spring.intern_quest_202504.controller;
 
 import java.util.List;
@@ -20,7 +21,6 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String get(Model model, @AuthenticationPrincipal LoginUserDetails user) {
-		
 		String userId = user.getLoginUser().getId();
 		
 		List<Overtime> thisOvertimeList = overtimeService.getThisOvertimeList(userId);

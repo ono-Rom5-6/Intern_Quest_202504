@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net..nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
-
 <head>
 </head>
-
 <body>
 	<nav layout:fragment="header" class="navbar navbar-expand-lg background mb-2 no-print">
 		<div class="container-fluid">
@@ -33,7 +31,7 @@
 								<a th:if="${#authentication.principal.loginUser.authority == 'deputyManager'}" class="dropdown-item" href="/overtime/combine" th:text="#{combine}"></a>
 							</li>
 							<li>
-								<a th:if="${#authentication.principal.loginUser.authority == 'deputyManager'}" class="dropdown-item" href="/overtime/select" th:text="#{monthly.processing}"></a>
+								<a th:if="${#authentication.principal.loginUser.authority == 'deputyManager'}" class="dropdown-item" href="/overtime/monthly-processing" th:text="#{monthly.processing}"></a>
 							</li>
 							<li>
 								<a sec:authorize="hasAuthority('sectionManager')" class="dropdown-item" href="/overtime/approve" th:text="#{approve}"></a>
@@ -49,7 +47,5 @@
 			</div>
 		</div>
 	</nav>
-
 </body>
-
 </html>
