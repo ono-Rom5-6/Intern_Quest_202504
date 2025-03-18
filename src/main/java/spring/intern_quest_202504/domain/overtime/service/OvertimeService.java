@@ -15,16 +15,16 @@ public interface OvertimeService {
 	
 	public void addReport(Overtime overtime);
 	
-	public ArrayList<Overtime> getYetCombinedList(String departmentId);
+	public ArrayList<Overtime> getYetCombinedList(String sectionId);
 	
 	public void addCombineId(String id, String combineId);
 	
-	public ArrayList<Overtime> getCombinedList(String departmentId);
+	public ArrayList<Overtime> getCombinedList(String sectionId);
 	
 	public void approve(Overtime overtime);
 	
 	public Overtime getOvertime(String id);
 	
-	public ArrayList<Overtime> getMonthlyProcessingList(String departmentId);
+	public ArrayList<Overtime> getMonthlyProcessingList(String sectonId);
 
 }

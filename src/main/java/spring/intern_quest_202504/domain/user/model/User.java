@@ -10,6 +10,7 @@ public class User {
 	private String pass;
 	private String name;
 	private String departmentId;
+	private String sectionId;
 	private String role;
 	private String authority;
 }

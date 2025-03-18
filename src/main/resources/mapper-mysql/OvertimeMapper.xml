@@ -8,6 +8,7 @@
 		<id column="id" property="id" />
 		<result column="user_id" property="userId" />
 		<result column="department_id" property="departmentId" />
+		<result column="section_id" property="sectionId" />
 		<result column="main_pattern" property="mainPattern" />
 		<result column="sub_pattern" property="subPattern" />
 		<result column="schedule_start" property="scheduleStart" />
@@ -32,22 +33,29 @@
 		<result column="combine_id" property="combineId" />
 		<result column="is_deleted" property="isDeleted" />
 		<result column="create_date" property="createDate" />
-		
 		<association property="department" resultMap="department"/>
+		<collection property="section" ofType="spring.intern_quest_202504.domain.section.model.Section">
+			<id column="section_id" property="sectionId" />
+			<result column="section_name" property="sectionName" />
+			<result column="department_id" property="depatmentId" />
+		</collection>
+		
+		
 		<collection property="user" ofType="spring.intern_quest_202504.domain.user.model.User">
 			<id column="id" property="id" />
 			<result column="user" property="user" />
 			<result column="pass" property="pass" />
 			<result column="name" property="name" />
-			<result column="department_id" property="departmentId" />
+			<result column="section_id" property="sectionId" />
 			<result column="role" property="role" />
 			<result column="authority" property="authority" />
 		</collection>
 		<collection property="combine" ofType="spring.intern_quest_202504.domain.combine.model.Combine">
 			<id column="id" property="id" />
 			<result column="create_user" property="createUser" />
-			<result column="department_id" property="departmentId" />
+			<result column="section_id" property="sectionId" />
 		</collection>
+		
 	</resultMap>
 	
 	<resultMap type="spring.intern_quest_202504.domain.user.model.User"
@@ -56,7 +64,7 @@
 		<result column="user" property="user" />
 		<result column="pass" property="pass" />
 		<result column="name" property="name" />
-		<result column="department_id" property="departmentId" />
+		<result column="section_id" property="sectionId" />
 		<result column="role" property="role" />
 		<result column="authority" property="authority" />
 	</resultMap>
@@ -95,6 +103,10 @@
 		from
 			overtime
 		join
+			section
+		on
+			overtime.section_id = section.section_id
+		join
 			department
 		on
 			overtime.department_id = department.id
@@ -128,6 +140,10 @@
 		on
 			overtime.user_id = user.id
 		join
+			section
+		on
+			overtime.section_id = section.section_id
+		join
 			department
 		on
 			overtime.department_id = department.id
@@ -160,15 +176,19 @@
 		on
 			overtime.user_id = user.id
 		join
+			section
+		on
+			overtime.section_id = section.section_id
+		join
 			department
 		on
-			overtime.department_id = department.id	
+			section.department_id = department.id	
 		join
 			combine
 		on
 			overtime.combine_id = combine.id
 		where
-			combine.department_id = #{departmentId}
+			combine.section_id = #{sectionId}
 		and
 			overtime.combine_id is not null
 		and
@@ -200,9 +220,13 @@
 		on
 			overtime.user_id = user.id
 		join
+			section
+		on
+			overtime.section_id = section.section_id
+		join
 			department
 		on
-			overtime.department_id = department.id	
+			overtime.department_id = department.id
 		where
 			overtime.id = #{id}
 	</select>
@@ -219,10 +243,16 @@
 			overtime.user_id = user.id
 		join
 			department
+		join
+			section
 		on
-			overtime.department_id = department.id	
+			overtime.section_id = section.section_id
+		join
+			department
+		on
+			overtime.department_id = department.id
 		where
-			overtime.department_id = #{departmentId}
+			overtime.section_id = #{sectionId}
 		and
 			date_format(approve_date, '%Y-%m')
 				= date_format(curdate() - interval 1 month, '%Y-%m')

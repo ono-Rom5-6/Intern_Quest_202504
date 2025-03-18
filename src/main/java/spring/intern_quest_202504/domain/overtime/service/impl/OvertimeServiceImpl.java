@@ -30,8 +30,8 @@ public class OvertimeServiceImpl implements OvertimeService {
 	}
 	
 	@Override
-	public ArrayList<Overtime> getYetCombinedList(String departmentId) {
-		return overtimeMapper.selectYetCombinedList(departmentId);
+	public ArrayList<Overtime> getYetCombinedList(String sectionId) {
+		return overtimeMapper.selectYetCombinedList(sectionId);
 	}
 	
 	@Override
@@ -40,8 +40,8 @@ public class OvertimeServiceImpl implements OvertimeService {
 	}
 	
 	@Override
-	public ArrayList<Overtime> getCombinedList(String departmentId) {
-		return overtimeMapper.selectCombinedList(departmentId);
+	public ArrayList<Overtime> getCombinedList(String sectionId) {
+		return overtimeMapper.selectCombinedList(sectionId);
 	}
 	
 	@Override
@@ -55,8 +55,8 @@ public class OvertimeServiceImpl implements OvertimeService {
 	}
 	
 	@Override
-	public ArrayList<Overtime> getMonthlyProcessingList(String departmentId) {
-		return overtimeMapper.selectMonthlyProcessingList(departmentId);
+	public ArrayList<Overtime> getMonthlyProcessingList(String sectonId) {
+		return overtimeMapper.selectMonthlyProcessingList(sectonId);
 	}
 
 }

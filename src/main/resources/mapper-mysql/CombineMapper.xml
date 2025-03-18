@@ -7,14 +7,14 @@
 		id="combine">
 		<id column="id" property="id" />
 		<result column="create_user" property="createUser" />
-		<result column="department_id" property="departmentId" />
+		<result column="section_id" property="sectionId" />
 	</resultMap>
 	
 	<insert id="insertCombine" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO combine
-		(create_user, department_id)
+		(create_user, section_id)
 		VALUES
-		(#{createUser}, #{departmentId})
+		(#{createUser}, #{sectionId})
 	</insert>
 	
 </mapper>

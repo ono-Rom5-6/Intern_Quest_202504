@@ -14,16 +14,16 @@ public interface OvertimeMapper {
 	
 	public void updateReport(Overtime overtime);
 	
-	public ArrayList<Overtime> selectYetCombinedList(String departmentId);
+	public ArrayList<Overtime> selectYetCombinedList(String sectionId);
 	
 	public void updateCombine(String id, String combineId);
 	
-	public ArrayList<Overtime> selectCombinedList(String departmentId);
+	public ArrayList<Overtime> selectCombinedList(String sectionId);
 	
 	public void updateApprove(Overtime overtime);
 	
 	public Overtime selectOvertime(String id);
 	
-	public ArrayList<Overtime> selectMonthlyProcessingList(String departmentId);
+	public ArrayList<Overtime> selectMonthlyProcessingList(String sectionId);
 
 }
