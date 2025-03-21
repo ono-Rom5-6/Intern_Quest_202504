@@ -7,6 +7,6 @@ import lombok.Data;
 public class Combine {
 	private String id;
 	private String createUser;
-	private String departmentId;
+	private String sectionId;
 
 }

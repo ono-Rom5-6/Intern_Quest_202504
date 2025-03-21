@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import spring.intern_quest_202504.domain.overtime.model.Overtime;
 import spring.intern_quest_202504.domain.overtime.service.OvertimeService;
 import spring.intern_quest_202504.domain.user.model.LoginUserDetails;
+import spring.intern_quest_202504.domain.user.model.User;
 
 @Controller
 public class HomeController {
@@ -20,10 +21,10 @@ public class HomeController {
 	
 	
 	@GetMapping("/home")
-	public String get(Model model, @AuthenticationPrincipal LoginUserDetails user) {
-		String userId = user.getLoginUser().getId();
+	public String get(Model model, @AuthenticationPrincipal LoginUserDetails loginUser) {
+		User user = loginUser.getLoginUser();
 		
-		List<Overtime> thisOvertimeList = overtimeService.getThisOvertimeList(userId);
+		List<Overtime> thisOvertimeList = overtimeService.getThisOvertimeList(user);
 		model.addAttribute("thisOvertimeList", thisOvertimeList);
 		
 		model.addAttribute("title", "home");

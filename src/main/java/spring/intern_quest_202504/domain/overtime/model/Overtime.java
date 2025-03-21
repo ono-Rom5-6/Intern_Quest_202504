@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import lombok.Data;
 import spring.intern_quest_202504.domain.combine.model.Combine;
 import spring.intern_quest_202504.domain.department.model.Department;
+import spring.intern_quest_202504.domain.section.model.Section;
 import spring.intern_quest_202504.domain.user.model.User;
 
 @Data
@@ -13,6 +14,7 @@ public class Overtime {
 	private String id;
 	private String userId;
 	private String departmentId;
+	private String sectionId;
 	private String mainPattern;
 	private String subPattern;
 	private LocalDateTime scheduleStart;
@@ -36,6 +38,7 @@ public class Overtime {
 	private LocalDateTime createDate;
 	
 	private Department department;
+	private Section section;
 	private User user;
 	private Combine combine;
 	

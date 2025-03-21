@@ -8,6 +8,7 @@
 		<id column="id" property="id" />
 		<result column="user_id" property="userId" />
 		<result column="department_id" property="departmentId" />
+		<result column="section_id" property="sectionId" />
 		<result column="main_pattern" property="mainPattern" />
 		<result column="sub_pattern" property="subPattern" />
 		<result column="schedule_start" property="scheduleStart" />
@@ -34,20 +35,31 @@
 		<result column="create_date" property="createDate" />
 		
 		<association property="department" resultMap="department"/>
+		
+		<collection property="section" ofType="spring.intern_quest_202504.domain.section.model.Section">
+			<id column="section_id" property="sectionId" />
+			<result column="section_name" property="sectionName" />
+			<result column="department_id" property="departmentId" />
+		</collection>
+		
+		
 		<collection property="user" ofType="spring.intern_quest_202504.domain.user.model.User">
 			<id column="id" property="id" />
 			<result column="user" property="user" />
 			<result column="pass" property="pass" />
 			<result column="name" property="name" />
 			<result column="department_id" property="departmentId" />
+			<result column="section_id" property="sectionId" />
 			<result column="role" property="role" />
 			<result column="authority" property="authority" />
 		</collection>
+		
 		<collection property="combine" ofType="spring.intern_quest_202504.domain.combine.model.Combine">
 			<id column="id" property="id" />
 			<result column="create_user" property="createUser" />
-			<result column="department_id" property="departmentId" />
+			<result column="section_id" property="sectionId" />
 		</collection>
+		
 	</resultMap>
 	
 	<resultMap type="spring.intern_quest_202504.domain.user.model.User"
@@ -57,6 +69,7 @@
 		<result column="pass" property="pass" />
 		<result column="name" property="name" />
 		<result column="department_id" property="departmentId" />
+		<result column="section_id" property="sectionId" />
 		<result column="role" property="role" />
 		<result column="authority" property="authority" />
 	</resultMap>
@@ -67,10 +80,25 @@
 		<result column="department_name" property="departmentName" />
 	</resultMap>
 	
+	<resultMap type="spring.intern_quest_202504.domain.section.model.Section"
+		id="section">
+		<id column="section_id" property="sectionId" />
+		<result column="section_name" property="sectionName" />
+		<result column="department_id" property="depatmentId" />
+	</resultMap>
+	
+	<resultMap type="spring.intern_quest_202504.domain.combine.model.Combine"
+		id="combine">
+		<id column="id" property="id" />
+		<result column="create_user" property="createUser" />
+		<result column="section_id" property="sectionId" />
+	</resultMap>
+	
 	<insert id="insertOvertime" parameterType="overtime">
 		insert into overtime(
 			user_id,
 			department_id,
+			section_id,
 			main_pattern,
 			sub_pattern,
 			schedule_start,
@@ -80,6 +108,7 @@
 		values(
 			#{userId},
 			#{departmentId},
+			#{sectionId},
 			#{mainPattern},
 			#{subPattern},
 			#{scheduleStart},
@@ -88,7 +117,7 @@
 		)
 	</insert>
 	
-	<select id="selectThisOvertimeList" parameterType="String"
+	<select id="selectThisOvertimeList" parameterType="user"
 		resultMap="overtime">
 		select
 			*, department.name as department_name
@@ -98,7 +127,13 @@
 			department
 		on
 			overtime.department_id = department.id
-		where user_id = #{userId}
+		<if test="sectionId != null">
+		join
+			section
+		on
+			overtime.section_id = section.section_id
+		</if>
+		where user_id = #{id}
 		order
 		by
 		schedule_start
@@ -128,11 +163,15 @@
 		on
 			overtime.user_id = user.id
 		join
+			section
+		on
+			overtime.section_id = section.section_id
+		join
 			department
 		on
 			overtime.department_id = department.id
 		where
-			overtime.department_id = #{departmentId}
+			overtime.section_id = #{sectionId}
 		and
 			overtime.combine_id is null
 		order
@@ -149,7 +188,7 @@
 		where id = #{id}
 	</update>
 	
-	<select id="selectCombinedList" parameterType="String"
+	<select id="selectCombinedList" parameterType="user"
 		resultMap="overtime">
 		select
 			*, department.name as department_name
@@ -160,15 +199,24 @@
 		on
 			overtime.user_id = user.id
 		join
+			section
+		on
+			overtime.section_id = section.section_id
+		join
 			department
 		on
-			overtime.department_id = department.id	
+			section.department_id = department.id	
 		join
 			combine
 		on
 			overtime.combine_id = combine.id
 		where
-			combine.department_id = #{departmentId}
+		<if test="sectionId != null">
+			overtime.section_id = #{sectionId}
+		</if>
+		<if test="sectionId == null">
+			overtime.department_id = #{departmentId}
+		</if>
 		and
 			overtime.combine_id is not null
 		and
@@ -200,9 +248,13 @@
 		on
 			overtime.user_id = user.id
 		join
+			section
+		on
+			overtime.section_id = section.section_id
+		join
 			department
 		on
-			overtime.department_id = department.id	
+			overtime.department_id = department.id
 		where
 			overtime.id = #{id}
 	</select>
@@ -220,9 +272,13 @@
 		join
 			department
 		on
-			overtime.department_id = department.id	
+			overtime.department_id = department.id
+		join
+			section
+		on
+			overtime.section_id = section.section_id
 		where
-			overtime.department_id = #{departmentId}
+			overtime.section_id = #{sectionId}
 		and
 			date_format(approve_date, '%Y-%m')
 				= date_format(curdate() - interval 1 month, '%Y-%m')

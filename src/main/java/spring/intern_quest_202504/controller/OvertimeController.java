@@ -64,6 +64,7 @@ public class OvertimeController {
 
 		overtime.setUserId(loginUser.getId());
 		overtime.setDepartmentId(loginUser.getDepartmentId());
+		overtime.setSectionId(loginUser.getSectionId());
 		overtime.setMainPattern(applyForm.getMainPattern());
 		overtime.setSubPattern(applyForm.getSubPattern());
 		overtime.setScheduleStart(applyForm.getScheduleStart());
@@ -149,9 +150,9 @@ public class OvertimeController {
 	@GetMapping("/combine")
 	public String getCombine(Model model, @ModelAttribute CombineForm combineForm,
 			@AuthenticationPrincipal LoginUserDetails loginUserDetails) {
-		String departmentId = loginUserDetails.getLoginUser().getDepartmentId();
+		String sectionId = loginUserDetails.getLoginUser().getSectionId();
 
-		ArrayList<Overtime> yetCombinedList = overtimeService.getYetCombinedList(departmentId);
+		ArrayList<Overtime> yetCombinedList = overtimeService.getYetCombinedList(sectionId);
 		model.addAttribute("yetCombinedList", yetCombinedList);
 
 		model.addAttribute("title", "combine");
@@ -162,16 +163,16 @@ public class OvertimeController {
 	public String postCombine(Model model, @ModelAttribute CombineForm combineForm,
 			@AuthenticationPrincipal LoginUserDetails loginUserDetails) {
 		List<String> overtimeIdsForCombine = Arrays.asList(combineForm.getOvertimeIds());
-		String departmentId = loginUserDetails.getLoginUser().getDepartmentId();
-
-		if (!overtimeIdsForCombineIsCorrect(departmentId, overtimeIdsForCombine)) {
+		String sectionId = loginUserDetails.getLoginUser().getSectionId();
+		
+		if (!overtimeIdsForCombineIsCorrect(sectionId, overtimeIdsForCombine)) {
 			set403error(model);
 			return "error";
 		}
 
 		Combine newCombine = new Combine();
 		newCombine.setCreateUser(loginUserDetails.getLoginUser().getId());
-		newCombine.setDepartmentId(loginUserDetails.getLoginUser().getDepartmentId());
+		newCombine.setSectionId(loginUserDetails.getLoginUser().getSectionId());
 
 		combineService.createCombine(newCombine);
 		String combineId = newCombine.getId();
@@ -186,9 +187,9 @@ public class OvertimeController {
 	@GetMapping("/approve")
 	public String getApprove(Model model, @ModelAttribute ApproveForm approveForm,
 			@AuthenticationPrincipal LoginUserDetails loginUserDetails) {
-		String departmentId = loginUserDetails.getLoginUser().getDepartmentId();
+		User loginUser = loginUserDetails.getLoginUser();
 
-		approveForm.setOvertimeList(overtimeService.getCombinedList(departmentId));
+		approveForm.setOvertimeList(overtimeService.getCombinedList(loginUser));
 
 		model.addAttribute("approveForm", approveForm);
 
@@ -200,9 +201,9 @@ public class OvertimeController {
 	@PostMapping("/approve")
 	public String postApprove(Model model, @ModelAttribute ApproveForm approveForm,
 			@AuthenticationPrincipal LoginUserDetails loginUserDetails) {
-		String departmentId = loginUserDetails.getLoginUser().getDepartmentId();
+		User loginUser = loginUserDetails.getLoginUser();
 		
-		if (!idsForApproveIsCorrect(departmentId, approveForm)) {
+		if (!idsForApproveIsCorrect(loginUser, approveForm)) {
 			set403error(model);
 			return "error";
 		}
@@ -226,9 +227,9 @@ public class OvertimeController {
 
 	@GetMapping("/monthly-processing")
 	public String getMonthlyProcessing(Model model, @AuthenticationPrincipal LoginUserDetails loginUserDetails) {
-		String departmentId = loginUserDetails.getLoginUser().getDepartmentId();
+		String sectionId = loginUserDetails.getLoginUser().getSectionId();
 
-		ArrayList<Overtime> monthlyProcessingList = overtimeService.getMonthlyProcessingList(departmentId);
+		ArrayList<Overtime> monthlyProcessingList = overtimeService.getMonthlyProcessingList(sectionId);
 		model.addAttribute("monthlyProcessingList", monthlyProcessingList);
 
 		return "overtime/monthly-processing";
@@ -244,8 +245,8 @@ public class OvertimeController {
 		return true;
 	}
 
-	public boolean overtimeIdsForCombineIsCorrect(String departmentId, List<String> overtimeIdsForCombine) {
-		List<String> idsYetCombine = overtimeService.getYetCombinedList(departmentId).stream()
+	public boolean overtimeIdsForCombineIsCorrect(String sectionId, List<String> overtimeIdsForCombine) {
+		List<String> idsYetCombine = overtimeService.getYetCombinedList(sectionId).stream()
 				.map(overtime -> overtime.getId())
 				.toList();
 		
@@ -253,8 +254,8 @@ public class OvertimeController {
 				.allMatch(id -> idsYetCombine.contains(id));
 	}
 	
-	public boolean idsForApproveIsCorrect(String departmentId, ApproveForm approveForm) {
-		List<String> idsForApprove = overtimeService.getCombinedList(departmentId).stream()
+	public boolean idsForApproveIsCorrect(User user, ApproveForm approveForm) {
+		List<String> idsForApprove = overtimeService.getCombinedList(user).stream()
 				.map(overtime -> overtime.getId())
 				.toList();
 
