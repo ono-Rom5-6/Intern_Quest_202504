@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.intern_quest_202504.repository.SectionMapper">
+	<resultMap type="spring.intern_quest_202504.domain.section.model.Section"
+		id="section">
+		<id column="section_id" property="sectionId" />
+		<result column="section_name" property="sectionName" />
+		<result column="department_id" property="depatmentId" />
+	</resultMap>
+	
+</mapper>

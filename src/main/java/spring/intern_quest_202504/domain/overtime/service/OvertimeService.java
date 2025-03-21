@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import spring.intern_quest_202504.domain.overtime.model.Overtime;
+import spring.intern_quest_202504.domain.user.model.User;
 
 @Service
 public interface OvertimeService {
 	public void addOvertime(Overtime overtime);
 	
-	public ArrayList<Overtime> getThisOvertimeList(String userId);
+	public ArrayList<Overtime> getThisOvertimeList(User user);
 	
 	public void addReport(Overtime overtime);
 	
@@ -19,7 +20,7 @@ public interface OvertimeService {
 	
 	public void addCombineId(String id, String combineId);
 	
-	public ArrayList<Overtime> getCombinedList(String sectionId);
+	public ArrayList<Overtime> getCombinedList(User user);
 	
 	public void approve(Overtime overtime);
 	

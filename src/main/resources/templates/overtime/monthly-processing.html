@@ -29,7 +29,7 @@
 						<tbody>
 							<tr>
 								<th scope="row" class="table-primary" th:text="#{department.name}"></th>
-								<td th:text="${item.department.departmentName}"></td>
+								<td th:text="|${item.department.departmentName}　${item.section?.sectionName}|"></td>
 								<th scope="row" class="table-primary" th:text="#{name}"></th>
 								<td th:text="${item.user.name}"></td>
 								<th scope="row" class="table-primary" th:text="#{work.pattern}"></th>

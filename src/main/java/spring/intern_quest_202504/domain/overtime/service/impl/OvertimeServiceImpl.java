@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import spring.intern_quest_202504.domain.overtime.model.Overtime;
 import spring.intern_quest_202504.domain.overtime.service.OvertimeService;
+import spring.intern_quest_202504.domain.user.model.User;
 import spring.intern_quest_202504.repository.OvertimeMapper;
 
 @Service
@@ -20,8 +21,8 @@ public class OvertimeServiceImpl implements OvertimeService {
 	}
 	
 	@Override
-	public ArrayList<Overtime> getThisOvertimeList(String userId) {
-		return overtimeMapper.selectThisOvertimeList(userId);
+	public ArrayList<Overtime> getThisOvertimeList(User user) {
+		return overtimeMapper.selectThisOvertimeList(user);
 	}
 	
 	@Override
@@ -40,8 +41,8 @@ public class OvertimeServiceImpl implements OvertimeService {
 	}
 	
 	@Override
-	public ArrayList<Overtime> getCombinedList(String sectionId) {
-		return overtimeMapper.selectCombinedList(sectionId);
+	public ArrayList<Overtime> getCombinedList(User user) {
+		return overtimeMapper.selectCombinedList(user);
 	}
 	
 	@Override
