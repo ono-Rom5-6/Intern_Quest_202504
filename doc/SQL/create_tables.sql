@@ -1,4 +1,5 @@
 create database intern_quest_202504;
+use intern_quest_202504;
 
 CREATE TABLE user (
   id INT AUTO_INCREMENT PRIMARY KEY, -- ID
