@@ -1,0 +1,97 @@
+【デプロイ手順】
+・Ubuntu 24.04LTSは既にインストールされているものとする。
+
+・Ubuntuにnginxをインストールし、起動する。
+sudo apt update
+sudo apt install nginx -y
+sudo systemctl start nginx
+
+・nginxがactive（running）であることを確認する
+sudo systemctl status nginx
+
+・nginxの設定画面へ
+sudo nano /etc/nginx/sites-available/default
+
+
+・コードを下記のものに変更
+server {
+        listen 80;
+
+location / {
+        proxy_pass http://localhost:8080/;
+}
+
+}
+
+・nginxを再起動
+sudo nginx -s reload
+
+・jarファイルを含んだプロジェクトをGitHubからクローンする
+git clone https://github.com/ono-Rom5-6/Intern_Quest_202504.git
+
+
+
+・JDKのインストール
+sudo apt update
+sudo apt upgrade
+sudo apt install openjdk-21-jdk
+
+・mySQLのインストール
+sudo apt update
+sudo apt install mysql-server-8.0 -f
+
+・mySQLの初期設定
+sudo /usr/bin/mysql_secure_installation
+
+質問形式で設定
+バリデーションについてはNo（Yとy以外を入力）
+他はYes（Yかｙを入力）
+
+・mySQLのパスワード設定
+sudo mysql -u root
+USE mysql;
+
+・rootユーザーのpluginがauth_socketであることを確認
+SELECT User, Host, plugin FROM user;
+
+・rootユーザーのパスワードを設定し、反映させる
+ALTER USER 'root'@'localhost' IDENTIFIED WITH 'caching_sha2_password' BY 'katach1';
+FLUSH PRIVILEGES;
+
+・rootユーザーのpluginがcaching_sha2_passwordになっているか確認
+SELECT user, host, plugin FROM mysql.user WHERE user = 'root';
+
+・データベースを作成
+create database intern_quest_202504;
+
+・作成したデータベースに移動
+use intern_quest_202504;
+
+・テーブルを作成し、テストデータを挿入
+GitHub上のdoc/SQL/create_tables.sqlをコピー・貼り付けし、実行
+GitHub上のdoc/SQL/insert_testdata.sqlをコピー・貼り付けし、実行
+
+・Javaアプリケーションの実行
+java -jar /home/<ユーザー名>/Intern_Quest_202504/Intern_Quest_202504-0.0.1-SNAPSHOT.jar
+<ユーザー名>をサーバー側のユーザー名に変更して実行する。
+
+・サーバーのIPアドレスを確認
+hostname -I
+
+・他のPCからhttp://<確認したIPアドレス>/loginで実行
+
+【動作確認】
+・≪テストユーザーの設定≫
+ユーザー：パスワード：権限
+test1 : thisIsTest : 社員(営業部 営業一課)
+test2 : thisIsTest : 社員(営業部 営業一課)
+test3 : thisIsTest : 次長(営業部 営業一課)
+test4 : thisIsTest : 課長(営業部 営業一課)
+test5 : thisIsTest : 部長(営業部)
+
+test6 : thisIsTest : 社員(営業部 営業二課)
+test7 : thisIsTest : 社員(営業部 営業二課)
+test8 : thisIsTest : 次長(営業部 営業二課)
+test9 : thisIsTest : 課長(営業部 営業二課)
+
+※初期データでのパスワードは共通で thisIsTest になっている
