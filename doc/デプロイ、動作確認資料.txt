@@ -26,10 +26,21 @@ location / {
 ・nginxを再起動
 sudo nginx -s reload
 
+・Gitのインストール
+sudo apt update
+sudo apt install git
+
+
+・Gitのアカウント設定
+git config --global user.name <ユーザー名>
+git config --global user.email <ユーザーのメールアドレス>
+
+・Gitの設定
+git config  --global core.autocrlf false
+git config  --global core.quotepath false
+
 ・jarファイルを含んだプロジェクトをGitHubからクローンする
 git clone https://github.com/ono-Rom5-6/Intern_Quest_202504.git
-
-
 
 ・JDKのインストール
 sudo apt update
